@@ -37,9 +37,6 @@ class Tour:
         """
         logging.info("Tour: Adding a new city to the tour")
         logging.info("Tour: Checking if the new city is valid..")
-        if verbose:
-            print("Adding a new city to the tour.")
-            print("Checking if the new city is valid..")
 
         if type(new_city) is not City:
             raise TypeError("The city that you want to add is not a City object")
@@ -51,11 +48,9 @@ class Tour:
         if new_city in self.tour_cities:
             raise ValueError("The city that you want to add is already in the tour")
 
-        if verbose:
-            print("Ok")
-            logging.info("Tour: Ok.")
-
         self.tour_cities.append(new_city)
+
+        logging.info("Tour: Ok.")
         return True
 
     def add_after_city(self, new_city: City, target_city: City, verbose: bool = False) -> bool:
@@ -68,9 +63,7 @@ class Tour:
         """
         logging.info(f"Tour: Adding a new city to the tour, after a target one.")
         logging.info(f"Tour: Checking if the target city is valid..")
-        if verbose:
-            logging.info(f"Tour: Adding a new city to the tour, after a target one.")
-            print("Checking if the target city is valid..")
+
         if type(target_city) is not City:
             raise TypeError("The city target is not a City object")
 
@@ -78,9 +71,6 @@ class Tour:
             raise ValueError("The city target is not in the tour")
 
         logging.info("Tour: Checking if the new city is valid..")
-        if verbose:
-            print("Adding a new city to the tour.")
-            print("Checking if the new city is valid..")
 
         if type(new_city) is not City:
             raise TypeError("The city that you want to add is not a City object")
@@ -92,11 +82,8 @@ class Tour:
         if new_city in self.tour_cities:
             raise ValueError("The city that you want to add is already in the tour")
 
-        if verbose:
-            print("Ok")
-            logging.info("Tour: Ok.")
-
         self.tour_cities.insert(self.tour_cities.index(target_city)+1,new_city)
+        logging.info("Tour: Ok.")
         return True
 
     def length(self, unit_of_measurement: str = "km") -> float:

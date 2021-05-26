@@ -52,63 +52,62 @@ def nearest_city_wrt_tour(my_tour: Tour, current_city: City, verbose: bool = Fal
         print(f"\t \t Nearest City To The Tour: The nearest addition is {best_city_prev}-{current_city}-{best_city_next}")
     return best_city_prev,best_city_next,best_distance
 
-def maximum_min_distance_city_finder(instance: List[City], tour: Tour, verbose: bool = False):
+def nearest_city_finder(instance: List[City], tour: Tour, verbose: bool = False):
     _nearest_list_ = []
     idx = 0
     for city in instance:
         if verbose:
             print("\n")
-            print(f"\t Maximum Minimum Distance: Find the nearest cut for {city}")
+            print(f"\t Nearest City Finder: Find the nearest cut for {city}")
         tour_before_city,tour_after_city,distance = nearest_city_wrt_tour(tour.tour_cities,city,verbose=verbose)
         _nearest_list_.append((tour_before_city,city,tour_after_city,distance))
     # With this we retrieve the maximum of minimum distance
-    _nearest_list_.sort(key=lambda element: element[3],reverse=True)
+    _nearest_list_.sort(key=lambda element: element[3])
     return _nearest_list_[0][0],_nearest_list_[0][1],_nearest_list_[0][2]
 
-def farthest_algorithm(original_instance: List[City], initial_city: City = None, verbose: bool = False):
-    logging.info(f"Farthest Addition: HELLO :=)")
+def nearest_addition_algorithm(original_instance: List[City], initial_city: City = None, verbose: bool = False):
+    logging.info(f"Nearest Addition: HELLO :=)")
     if verbose:
         print("\n")
-        print(f"Farthest Addition: HELLO :=)")
+        print(f"Nearest Addition: HELLO :=)")
     _tour: Tour = Tour(tour_type=original_instance[0].location_type)
 
     # we select an initial city and remove it from the instance
     if verbose:
-        print("Farthest Addition: Cloning list..")
+        print("Nearest Addition: Cloning list..")
     _instance: List[City] = original_instance.copy()
 
     if verbose:
-        print("Farthest Addition: Setting up the initial instances")
+        print("Nearest Addition: Setting up the initial instances")
     _current_city: City = _instance[-1] if not initial_city else initial_city
     _instance.remove(_current_city)
     _tour.append(_current_city)
 
-    logging.info(f"Farthest Addition: Checking the starting point")
-    logging.info(f"Farthest Addition: Original instance {original_instance}")
-    logging.info(f"Farthest Addition: Starting city {_current_city.name}")
-    logging.info(f"Farthest Addition: Starting Farthest Addition algorithm")
+    logging.info(f"Nearest Addition: Checking the starting point")
+    logging.info(f"Nearest Addition: Original instance {original_instance}")
+    logging.info(f"Nearest Addition: Starting city {_current_city.name}")
+    logging.info(f"Nearest Addition: Starting Nearest Addition algorithm")
     if verbose:
-        print(f"Farthest Addition: Start looking from the source list of cities nearest to {_current_city.name}")
-        print(f"Farthest Addition: Checking the starting point..")
-        print(f"Farthest Addition: Original instance {original_instance}")
-        print(f"Farthest Addition: Starting city {_current_city.name}")
-        print(f"Farthest Addition: Starting Farthest Addition algorithm..")
-
+        print(f"Nearest Addition: Start looking from the source list of cities nearest to {_current_city.name}")
+        print(f"Nearest Addition: Checking the starting point..")
+        print(f"Nearest Addition: Original instance {original_instance}")
+        print(f"Nearest Addition: Starting city {_current_city.name}")
+        print(f"Nearest Addition: Starting Nearest Addition algorithm..")
 
     # main loop to empty the set
 
     iterator_idx = 1
     while _instance:
-        logging.info(f"Farthest Addition: Iteration {iterator_idx}, {_tour}")
+        logging.info(f"Nearest Addition: Iteration {iterator_idx}, {_tour}")
         if verbose:
             print("\n")
-            print(f"Farthest Addition: Iteration {iterator_idx}, {_tour}")
-        prev_city,_current_city,after_city = maximum_min_distance_city_finder(_instance, _tour, verbose=verbose)
+            print(f"Nearest Addition: Iteration {iterator_idx}, {_tour}")
+        prev_city, _current_city, after_city = nearest_city_finder(_instance, _tour, verbose=verbose)
 
-        logging.info(f"Farthest Addition: Adding {_current_city} to the tour")
+        logging.info(f"Nearest Addition: Adding {_current_city} to the tour")
         if verbose:
             print("\n")
-            print(f"Farthest Addition: Adding {_current_city} to the tour")
+            print(f"Nearest Addition: Adding {_current_city} to the tour")
 
         # move best city from the instance to the tour
         if prev_city == after_city:
@@ -118,23 +117,23 @@ def farthest_algorithm(original_instance: List[City], initial_city: City = None,
         _instance.remove(_current_city)
         iterator_idx += 1
 
-    logging.info("Farthest Addition: Done.")
-    logging.info(f"Farthest Addition: Checking if the tour is valid..")
+    logging.info("Nearest Addition: Done.")
+    logging.info(f"Nearest Addition: Checking if the tour is valid..")
     if verbose:
-        print(f"Farthest Addition: Done.")
-        print(f"Farthest Addition: Checking if the tour is valid..")
+        print(f"Nearest Addition: Done.")
+        print(f"Nearest Addition: Checking if the tour is valid..")
 
     # check if it is valid
     if not _tour.is_valid(original_instance):
-        logging.error(f"Farthest Addition: Not valid.")
+        logging.error(f"Nearest Addition: Not valid.")
         if verbose:
-            print(f"Farthest Addition: Not Valid.")
+            print(f"Nearest Addition: Not Valid.")
         return None
 
-    logging.info("Farthest Addition: Ok.")
-    logging.info(f"Farthest Addition: Tour length: {_tour.length():.3f}km")
+    logging.info("Nearest Addition: Ok.")
+    logging.info(f"Nearest Addition: Tour length: {_tour.length():.3f}km")
     if verbose:
-        print(f"Farthest Addition: Ok.")
-        print(f"Farthest Addition: {_tour}")
-        print(f"Farthest Addition: Tour length: {_tour.length():.3f}km")
+        print(f"Nearest Addition: Ok.")
+        print(f"Nearest Addition: {_tour}")
+        print(f"Nearest Addition: Tour length: {_tour.length():.3f}km")
     return _tour

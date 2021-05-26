@@ -109,12 +109,8 @@ class City:
         :type other_city: City
         :exception: If other_city is not class City return an exception
         """
-        logging.info(f"City: Requested a distance measuring from {self.name}..")
+        logging.info(f"City: Requested a distance {self.name}-{other_city.name}")
         logging.info(f"City: Checking if the other city to consider is a city..")
-
-        if verbose:
-            print(f"City: Requested a distance measuring from {self.name}..")
-            print(f"City: Checking if the other city to consider is a city..")
 
         if type(other_city) is not City:
             return TypeError("Wrong type of other city")
@@ -128,10 +124,6 @@ class City:
         if self.location_type == CityDataType.Geographical:
             logging.info(f"City: Computing the geodesic distance between {self.name} and {other_city.name}")
 
-            if verbose:
-                print("Ok")
-                print(f"Computing the geodesic distance between {self.name} and {other_city.name}")
-
             try:
                 _other_city_latitude, _other_city_longitude = other_city.get_coordinate()
                 _distance = geodesic((self.__location.latitude, self.__location.longitude),
@@ -142,21 +134,14 @@ class City:
         else:
             logging.info(f"City: Computing the eucledian distance between {self.name} and {other_city.name}")
 
-            if verbose:
-                print("Ok")
-                print(f"Computing the eucledian distance between {self.name} and {other_city.name}")
-
             try:
                 _local_city_x, _local_city_y = self.get_coordinate()
-                _other_city_x, _other_city_y = self.get_coordinate()
+                _other_city_x, _other_city_y = other_city.get_coordinate()
                 _distance = sqrt((_local_city_x - _other_city_x) ** 2 + (_local_city_y - _other_city_y) ** 2)
             except Exception as ex:
                 logging.exception("City: An error occurred during the computation of the distance", ex, exc_info=True)
 
         logging.info(
             f"City: Distance computed, equal: {_distance:.3f}{unit_of_measure if self.location_type == CityDataType.Geographical else ''}")
-
-        if verbose:
-            print("Distance computed, equal: {_distance:.3f}{unit_of_measure}")
 
         return _distance
