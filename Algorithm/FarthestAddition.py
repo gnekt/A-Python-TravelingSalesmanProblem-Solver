@@ -4,7 +4,7 @@ from Model.City import City
 import logging
 
 
-def farthest_city(my_tour: Tour, current_city: City, verbose: bool = False):
+def farthest_city_wrt_tour(my_tour: Tour, current_city: City, verbose: bool = False):
     """
     Check the nearest city to current city, among all the cities (instance)
     :param instance: The source list of cities
@@ -41,11 +41,11 @@ def farthest_city(my_tour: Tour, current_city: City, verbose: bool = False):
     #     print(f"Nearest City: The nearest city to {current_city.name} is {best_city.name}")
     return best_city_prev,best_city_next,best_distance
 
-def farthest_city_wrt_tour(instance: List[City], tour: Tour, verbose: bool = False):
+def farthest_city_finder(instance: List[City], tour: Tour, verbose: bool = False):
     _farthest_list_ = []
     idx = 0
     for city in instance:
-        tour_before_city,tour_after_city,distance = farthest_city(tour.tour_cities,city)
+        tour_before_city,tour_after_city,distance = farthest_city_wrt_tour(tour.tour_cities,city)
         _farthest_list_.append((tour_before_city,city,tour_after_city,distance))
     _farthest_list_.sort(key=lambda element: element[3],reverse=True)
     return _farthest_list_[0][0],_farthest_list_[0][1],_farthest_list_[0][2]
@@ -87,7 +87,7 @@ def farthest_algorithm_naive(original_instance: List[City], initial_city: City =
         logging.info(f"Farthest Addition Naive: Iteration {iterator_idx}, {_tour}")
         if verbose:
             print(f"Farthest Addition Naive: Iteration {iterator_idx}, {_tour}")
-        prev_city,_current_city,after_city = farthest_city_wrt_tour(_instance, _tour, verbose=verbose)
+        prev_city,_current_city,after_city = farthest_city_finder(_instance, _tour, verbose=verbose)
         # move best city from the instance to the tour
         if prev_city == after_city:
             _tour.append(_current_city)
@@ -121,17 +121,3 @@ def farthest_algorithm_naive(original_instance: List[City], initial_city: City =
         print(f"Farthest Addition Naive: {_tour}")
         print(f"Farthest Addition Naive: Tour length: {_tour.length():.3f}km")
     return _tour
-
-
-if __name__ == "__main__":
-    verbose_mode = True
-    logging.basicConfig(filename="DiMaioProject.log", level=logging.INFO, filemode="w")
-    logging.info("Start")
-    caserta: City = City(41.0842, 14.3358, "Caserta", verbose=verbose_mode)
-    san_prisco: City = City(41.0881, 14.2791, "San Prisco", verbose=verbose_mode)
-    san_gennaro: City = City(48.0881, 14.2791, "San Gennaro", verbose=verbose_mode)
-
-    logging.info("Finished")
-    _t = Tour()
-    _t.append(san_prisco)
-    tour = farthest_algorithm_naive([caserta, san_gennaro], _t, verbose=verbose_mode)
