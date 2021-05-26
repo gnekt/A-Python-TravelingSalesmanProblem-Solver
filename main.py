@@ -17,9 +17,9 @@ if __name__ == "__main__":
 
     logging.info("Finished")
     tour = nearest_neighbor_algorithm([caserta, ucraina, san_prisco, perm], None, verbose=verbose_mode)
-    tour_2 = farthest_algorithm_naive([caserta,ucraina,san_prisco,perm],None,verbose=verbose_mode)
-    tour_3 = farthest_algorithm([caserta,ucraina,san_prisco,perm],None,verbose=verbose_mode)
-    tour_4 = nearest_addition_algorithm([caserta,ucraina,san_prisco,perm],None,verbose=verbose_mode)
+    tour_2 = farthest_algorithm_naive([caserta,ucraina,san_prisco,perm],None,verbose=verbose_mode,graph_velocity=1,graph_step_by_step=False)
+    tour_3 = farthest_algorithm([caserta,ucraina,san_prisco,perm],None,verbose=verbose_mode,graph_velocity=1,graph_step_by_step=False)
+    tour_4 = nearest_addition_algorithm([caserta,ucraina,san_prisco,perm],None,verbose=verbose_mode,graph_velocity=1,graph_step_by_step=False)
     tour.plot()
     tour_2.tour_name="Farthest Naive"
     tour_2.plot()

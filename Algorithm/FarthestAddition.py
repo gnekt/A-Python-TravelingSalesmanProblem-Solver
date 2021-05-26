@@ -1,7 +1,12 @@
 from typing import List
+
+from matplotlib import pyplot as plt
+
 from Model.Tour import Tour
 from Model.City import City
 import logging
+
+from Utils.Plot import plot
 
 
 def nearest_city_wrt_tour(my_tour: Tour, current_city: City, verbose: bool = False):
@@ -65,7 +70,7 @@ def maximum_min_distance_city_finder(instance: List[City], tour: Tour, verbose: 
     _nearest_list_.sort(key=lambda element: element[3],reverse=True)
     return _nearest_list_[0][0],_nearest_list_[0][1],_nearest_list_[0][2]
 
-def farthest_algorithm(original_instance: List[City], initial_city: City = None, verbose: bool = False):
+def farthest_algorithm(original_instance: List[City], initial_city: City = None, verbose: bool = False, graph_velocity= 0.01, graph_step_by_step=False):
     logging.info(f"Farthest Addition: HELLO :=)")
     if verbose:
         print("\n")
@@ -82,6 +87,11 @@ def farthest_algorithm(original_instance: List[City], initial_city: City = None,
     _current_city: City = _instance[-1] if not initial_city else initial_city
     _instance.remove(_current_city)
     _tour.append(_current_city)
+    if verbose:
+        if not graph_step_by_step:
+            plt.ion()
+            plt.show()
+        plot(_tour.tour_cities, _instance, graph_velocity, graph_step_by_step)
 
     logging.info(f"Farthest Addition: Checking the starting point")
     logging.info(f"Farthest Addition: Original instance {original_instance}")
@@ -117,6 +127,8 @@ def farthest_algorithm(original_instance: List[City], initial_city: City = None,
             _tour.add_after_city(_current_city, prev_city, verbose=verbose)
         _instance.remove(_current_city)
         iterator_idx += 1
+        if verbose:
+            plot(_tour.tour_cities, _instance, graph_velocity,graph_step_by_step)
 
     logging.info("Farthest Addition: Done.")
     logging.info(f"Farthest Addition: Checking if the tour is valid..")
@@ -134,6 +146,7 @@ def farthest_algorithm(original_instance: List[City], initial_city: City = None,
     logging.info("Farthest Addition: Ok.")
     logging.info(f"Farthest Addition: Tour length: {_tour.length():.3f}km")
     if verbose:
+        plot(_tour.tour_cities + [_tour.position(0)], _instance, graph_velocity, graph_step_by_step)
         print(f"Farthest Addition: Ok.")
         print(f"Farthest Addition: {_tour}")
         print(f"Farthest Addition: Tour length: {_tour.length():.3f}km")
