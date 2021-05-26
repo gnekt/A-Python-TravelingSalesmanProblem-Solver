@@ -55,7 +55,7 @@ def farthest_algorithm_naive(original_instance: List[City], initial_city: City =
     if verbose:
         print("\n")
         print(f"Farthest Addition Naive: HELLO :=)")
-    _tour: Tour = Tour()
+    _tour: Tour = Tour(tour_type=original_instance[0].location_type)
 
     # we select an initial city and remove it from the instance
     if verbose:

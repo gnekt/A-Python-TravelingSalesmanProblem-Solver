@@ -29,13 +29,14 @@ def nearest_city(instance: List[City], current_city: City, verbose: bool = False
     return best_city
 
 
-
 def nearest_neighbor_algorithm(original_instance: List[City], initial_city: City = None, verbose: bool = False):
     logging.info(f"Nearest Neighbor: HELLO :=)")
     if verbose:
         print("\n")
         print(f"Nearest Neighbor: HELLO :=)")
-    _tour: Tour = Tour()
+
+    # We could assume that the original instance has all the same coordinates type.
+    _tour: Tour = Tour(tour_type=original_instance[0].location_type)
 
     # we select an initial city and remove it from the instance
     if verbose:
@@ -58,7 +59,6 @@ def nearest_neighbor_algorithm(original_instance: List[City], initial_city: City
         print(f"Nearest Neighbor: Original instance {original_instance}")
         print(f"Nearest Neighbor: Starting city {_current_city.name}")
         print(f"Nearest Neighbor: Starting Nearest Neighbor algorithm..")
-
 
     # main loop to empty the set
 
