@@ -17,10 +17,12 @@ def nearest_city_wrt_tour(my_tour: Tour, current_city: City, verbose: bool = Fal
     :param verbose: Verbose mode
     :return: The nearest city over the instance
     """
-    logging.info(f"Nearest City To The Tour: Starting looking from the source list of cities nearest to {current_city.name}")
+    logging.info(
+        f"Nearest City To The Tour: Starting looking from the source list of cities nearest to {current_city.name}")
     if verbose:
         print("\n")
-        print(f"\t \t Nearest City To The Tour: Starting looking from the source list of cities nearest to {current_city.name}")
+        print(
+            f"\t \t Nearest City To The Tour: Starting looking from the source list of cities nearest to {current_city.name}")
 
     best_distance, best_city_prev, best_city_next = None, None, None
     if len(my_tour) == 1:
@@ -34,7 +36,7 @@ def nearest_city_wrt_tour(my_tour: Tour, current_city: City, verbose: bool = Fal
         if verbose:
             print(f"\t \t \t Nearest City To The Tour: Length {best_distance}")
     else:
-        for prev_city,next_city in zip(my_tour,my_tour[1:]):
+        for prev_city, next_city in zip(my_tour, my_tour[1:]):
             logging.info(f"Farthest City To The Tour: Try this shortcut {prev_city}-{current_city}-{next_city}")
             if verbose:
                 print(f"\t \t \t Nearest City To The Tour: Try this shortcut {prev_city}-{current_city}-{next_city}")
@@ -47,15 +49,17 @@ def nearest_city_wrt_tour(my_tour: Tour, current_city: City, verbose: bool = Fal
                 best_city_prev = prev_city
                 best_city_next = next_city
 
-            if _distance_prev+_distance_next < best_distance:
+            if _distance_prev + _distance_next < best_distance:
                 best_distance = _distance_prev + _distance_next
                 best_city_prev = prev_city
                 best_city_next = next_city
 
     logging.info(f"Nearest City To The Tour: The nearest addition is {best_city_prev}-{current_city}-{best_city_next}")
     if verbose:
-        print(f"\t \t Nearest City To The Tour: The nearest addition is {best_city_prev}-{current_city}-{best_city_next}")
-    return best_city_prev,best_city_next,best_distance
+        print(
+            f"\t \t Nearest City To The Tour: The nearest addition is {best_city_prev}-{current_city}-{best_city_next}")
+    return best_city_prev, best_city_next, best_distance
+
 
 def nearest_city_finder(instance: List[City], tour: Tour, verbose: bool = False):
     _nearest_list_ = []
@@ -64,13 +68,15 @@ def nearest_city_finder(instance: List[City], tour: Tour, verbose: bool = False)
         if verbose:
             print("\n")
             print(f"\t Nearest City Finder: Find the nearest cut for {city}")
-        tour_before_city,tour_after_city,distance = nearest_city_wrt_tour(tour.tour_cities,city,verbose=verbose)
-        _nearest_list_.append((tour_before_city,city,tour_after_city,distance))
+        tour_before_city, tour_after_city, distance = nearest_city_wrt_tour(tour.tour_cities, city, verbose=verbose)
+        _nearest_list_.append((tour_before_city, city, tour_after_city, distance))
     # With this we retrieve the maximum of minimum distance
     _nearest_list_.sort(key=lambda element: element[3])
-    return _nearest_list_[0][0],_nearest_list_[0][1],_nearest_list_[0][2]
+    return _nearest_list_[0][0], _nearest_list_[0][1], _nearest_list_[0][2]
 
-def nearest_addition_algorithm(original_instance: List[City], initial_city: City = None, verbose: bool = False, graph_velocity=0.01, graph_step_by_step=False):
+
+def nearest_addition_algorithm(original_instance: List[City], initial_city: City = None, verbose: bool = False,
+                               graph_velocity=0.01, graph_step_by_step=False):
     logging.info(f"Nearest Addition: HELLO :=)")
     if verbose:
         print("\n")
@@ -92,7 +98,7 @@ def nearest_addition_algorithm(original_instance: List[City], initial_city: City
         if not graph_step_by_step:
             plt.ion()
             plt.show()
-        plot(_tour.tour_cities, _instance, graph_velocity,graph_step_by_step)
+        plot(_tour.tour_cities, _instance, graph_velocity, graph_step_by_step)
 
     logging.info(f"Nearest Addition: Checking the starting point")
     logging.info(f"Nearest Addition: Original instance {original_instance}")

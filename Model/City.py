@@ -61,13 +61,13 @@ class City:
                 print(ex)
                 logging.exception(ex, exc_info=True)
         else:
-            if not type(coord_y) is int or not type(coord_x) is int:
+            if not type(coord_y) is float or not type(coord_x) is float:
                 raise TypeError(f"Wrong coordinates type, got x:{coord_x}, y:{coord_y}")
-            self.__location.coord_x, self.__location.coord_y = coord_x, coord_y
+            self.__location = (coord_x, coord_y)
 
-        logging.info(f"City: Coordinates: {coord_y},{coord_x}")
+        logging.info(f"City: Coordinates: {self.get_coordinate()}")
         if verbose:
-            print(f"Coordinates: {coord_y},{coord_x}")
+            print(f"Coordinates: {self.get_coordinate()}")
 
         self.name = city_name
         logging.info("City: Created.")
@@ -81,7 +81,7 @@ class City:
         :return: Coordinate as (X,Y) if CityDataType is Eucledian, (Latitude,Longitude) if Geographical.
         """
         if self.location_type == CityDataType.Euclidian_2D:
-            return self.__location.coord_x, self.__location.coord_y
+            return self.__location[0], self.__location[1]
         if self.location_type == CityDataType.Geographical:
             return self.__location.latitude, self.__location.longitude
 
@@ -92,8 +92,7 @@ class City:
         if not other_city.location_type == self.location_type:
             return False
         if self.location_type == CityDataType.Euclidian_2D:
-            return self.__location.coord_x == other_city.location.coord_x and \
-                        self.__location.coord_y == other_city.location.coord_y
+            return self.get_coordinate() == other_city.get_coordinate
         if self.location_type == CityDataType.Geographical:
             return self.__location.latitude == other_city.__location.latitude and \
                         self.__location.longitude == other_city.__location.longitude

@@ -1,5 +1,4 @@
 import webbrowser
-from enum import Enum
 from typing import  List
 from Model.City import City
 import logging

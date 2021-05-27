@@ -24,18 +24,18 @@ def farthest_city_wrt_tour(my_tour: Tour, current_city: City, verbose: bool = Fa
         logging.info("Farthest City To The Tour: There is only one city in the tour, only one calculation.")
         if verbose:
             print("\t \t Farthest City To The Tour: There is only one city in the tour, only one calculation.")
-        best_distance = current_city.distance(my_tour[0],verbose=verbose)
+        best_distance = current_city.distance(my_tour[0], verbose=verbose)
         best_city_prev = my_tour[0]
         best_city_next = my_tour[0]
         if verbose:
             print(f"\t \t \t Farthest City To The Tour: Length {best_distance}")
     else:
-        for prev_city,next_city in zip(my_tour,my_tour[1:]):
+        for prev_city, next_city in zip(my_tour, my_tour[1:]):
             logging.info(f"Farthest City To The Tour: Try this shortcut {prev_city}-{current_city}-{next_city}")
             if verbose:
                 print(f"\t \t \t Farthest City To The Tour: Try this shortcut {prev_city}-{current_city}-{next_city}")
-            _distance_prev = current_city.distance(prev_city,verbose=verbose)
-            _distance_next = current_city.distance(next_city,verbose=verbose)
+            _distance_prev = current_city.distance(prev_city, verbose=verbose)
+            _distance_next = current_city.distance(next_city, verbose=verbose)
             if verbose:
                 print(f"\t \t \t Farthest City To The Tour: Length {_distance_prev + _distance_next}")
             if not best_distance:
@@ -43,30 +43,34 @@ def farthest_city_wrt_tour(my_tour: Tour, current_city: City, verbose: bool = Fa
                 best_city_prev = prev_city
                 best_city_next = next_city
 
-            if _distance_prev+_distance_next > best_distance:
+            if _distance_prev + _distance_next > best_distance:
                 best_distance = _distance_prev + _distance_next
                 best_city_prev = prev_city
                 best_city_next = next_city
 
-    logging.info(f"Farthest City To The Tour: The farthest addition is {best_city_prev}-{current_city}-{best_city_next}")
+    logging.info(
+        f"Farthest City To The Tour: The farthest addition is {best_city_prev}-{current_city}-{best_city_next}")
     if verbose:
-        print(f"\t \t Farthest City To The Tour: The farthest addition is {best_city_prev}-{current_city}-{best_city_next}")
-    return best_city_prev,best_city_next,best_distance
+        print(
+            f"\t \t Farthest City To The Tour: The farthest addition is {best_city_prev}-{current_city}-{best_city_next}")
+    return best_city_prev, best_city_next, best_distance
+
 
 def farthest_city_finder(instance: List[City], tour: Tour, verbose: bool = False):
-
     _farthest_list_ = []
     idx = 0
     for city in instance:
         if verbose:
             print("\n")
             print(f"\t Farthest City Finder: Find the farthest cut for {city}")
-        tour_before_city,tour_after_city,distance = farthest_city_wrt_tour(tour.tour_cities,city,verbose=verbose)
-        _farthest_list_.append((tour_before_city,city,tour_after_city,distance))
-    _farthest_list_.sort(key=lambda element: element[3],reverse=True)
-    return _farthest_list_[0][0],_farthest_list_[0][1],_farthest_list_[0][2]
+        tour_before_city, tour_after_city, distance = farthest_city_wrt_tour(tour.tour_cities, city, verbose=verbose)
+        _farthest_list_.append((tour_before_city, city, tour_after_city, distance))
+    _farthest_list_.sort(key=lambda element: element[3], reverse=True)
+    return _farthest_list_[0][0], _farthest_list_[0][1], _farthest_list_[0][2]
 
-def farthest_algorithm_naive(original_instance: List[City], initial_city: City = None, verbose: bool = False, graph_velocity=0.01, graph_step_by_step=False):
+
+def farthest_algorithm_naive(original_instance: List[City], initial_city: City = None, verbose: bool = False,
+                             graph_velocity=0.01, graph_step_by_step=False):
     logging.info(f"Farthest Addition Naive: HELLO :=)")
     if verbose:
         print("\n")
@@ -77,8 +81,6 @@ def farthest_algorithm_naive(original_instance: List[City], initial_city: City =
     if verbose:
         print("Farthest Addition Naive: Cloning list..")
     _instance: List[City] = original_instance.copy()
-
-
 
     if verbose:
         print("Farthest Addition Naive: Setting up the initial instances")
@@ -103,7 +105,6 @@ def farthest_algorithm_naive(original_instance: List[City], initial_city: City =
         print(f"Farthest Addition Naive: Starting city {_current_city.name}")
         print(f"Farthest Addition Naive: Starting Farthest Addition Naive algorithm..")
 
-
     # main loop to empty the set
 
     iterator_idx = 1
@@ -112,7 +113,7 @@ def farthest_algorithm_naive(original_instance: List[City], initial_city: City =
         if verbose:
             print("\n")
             print(f"Farthest Addition Naive: Iteration {iterator_idx}, {_tour}")
-        prev_city,_current_city,after_city = farthest_city_finder(_instance, _tour, verbose=verbose)
+        prev_city, _current_city, after_city = farthest_city_finder(_instance, _tour, verbose=verbose)
         # move best city from the instance to the tour
         logging.info(f"Farthest Addition Naive: Adding {_current_city} to the tour")
         if verbose:
@@ -121,12 +122,11 @@ def farthest_algorithm_naive(original_instance: List[City], initial_city: City =
         if prev_city == after_city:
             _tour.append(_current_city)
         else:
-            _tour.add_after_city(_current_city,prev_city,verbose=verbose)
+            _tour.add_after_city(_current_city, prev_city, verbose=verbose)
         _instance.remove(_current_city)
         iterator_idx += 1
         if verbose:
             plot(_tour.tour_cities, _instance, graph_velocity, graph_step_by_step)
-
 
     logging.info("Farthest Addition Naive: Done.")
     logging.info(f"Farthest Addition Naive: Checking if the tour is valid..")
