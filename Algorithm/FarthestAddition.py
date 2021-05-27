@@ -6,7 +6,7 @@ from Model.Tour import Tour
 from Model.City import City
 import logging
 
-from Utils.Plot import plot
+from Utils.Plot import plot_2d_tour
 
 
 def nearest_city_wrt_tour(my_tour: Tour, current_city: City, verbose: bool = False):
@@ -97,7 +97,7 @@ def farthest_addition_algorithm(original_instance: List[City], initial_city: Cit
         if not graph_step_by_step:
             plt.ion()
             plt.show()
-        plot(_tour.tour_cities, _instance, graph_velocity, graph_step_by_step)
+        plot_2d_tour(_tour.tour_cities, _instance, graph_velocity, graph_step_by_step)
 
     logging.info(f"Farthest Addition: Checking the starting point")
     logging.info(f"Farthest Addition: Original instance {original_instance}")
@@ -133,7 +133,7 @@ def farthest_addition_algorithm(original_instance: List[City], initial_city: Cit
         _instance.remove(_current_city)
         iterator_idx += 1
         if verbose:
-            plot(_tour.tour_cities, _instance, graph_velocity, graph_step_by_step)
+            plot_2d_tour(_tour.tour_cities, _instance, graph_velocity, graph_step_by_step)
 
     logging.info("Farthest Addition: Done.")
     logging.info(f"Farthest Addition: Checking if the tour is valid..")
@@ -151,7 +151,7 @@ def farthest_addition_algorithm(original_instance: List[City], initial_city: Cit
     logging.info("Farthest Addition: Ok.")
     logging.info(f"Farthest Addition: Tour length: {_tour.length():.3f}km")
     if verbose:
-        plot(_tour.tour_cities + [_tour.position(0)], _instance, graph_velocity, graph_step_by_step)
+        plot_2d_tour(_tour.tour_cities + [_tour.position(0)], _instance, graph_velocity, graph_step_by_step)
         print(f"Farthest Addition: Ok.")
         print(f"Farthest Addition: {_tour}")
         print(f"Farthest Addition: Tour length: {_tour.length():.3f}km")

@@ -1,7 +1,11 @@
 from abc import ABC, abstractmethod
 from enum import Enum
+
+from matplotlib import pyplot as plt
+
 from Model.Tour import Tour
 import TwoOpt
+from Utils.Plot import plot_local_search_line
 
 
 class Neighbourhood(Enum):
@@ -24,6 +28,11 @@ class LocalSearch:
             self.evaluation = TwoOpt.delta_evaluation
 
     def local_search(self, tour=None, instances=None, constructive_algorithm=None, first_city=None, verbose=False):
+        _length_history = {}
+        _iteration = 1
+        fig, scatter = plt.subplots()
+        plt.ion()
+        plt.show()
         if self.neighborhood == Neighbourhood.TWO_OPT:
             if constructive_algorithm:
                 if not instances:
@@ -32,13 +41,17 @@ class LocalSearch:
             if not tour:
                 raise ValueError("We cannot start local search without a 1st solution")
             tour.append(tour.position(0))
+            _length_history[_iteration] = tour.length()
             while True:
-                pos1, pos3 = self.exploration(tour, verbose)
-                if pos1:
-                    tour = self.neighbor(tour, pos1, pos3, verbose)
-                    if verbose:
-                        print(tour.length())
-                else:
-                    tour.remove(-1)
-                    return tour
-
+                try:
+                    plot_local_search_line(scatter,list(_length_history.keys()),list(_length_history.values()),velocity=0.01,graph_step_by_step=False)
+                    pos1, pos3 = self.exploration(tour, verbose)
+                    _length_history[_iteration] = tour.length()
+                    _iteration += 1
+                    if pos1 is not None:
+                        tour = self.neighbor(tour, pos1, pos3, verbose)
+                    else:
+                        tour.remove(-1)
+                        return tour
+                except Exception as ex:
+                    print(ex)

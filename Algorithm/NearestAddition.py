@@ -6,7 +6,7 @@ from Model.Tour import Tour
 from Model.City import City
 import logging
 
-from Utils.Plot import plot
+from Utils.Plot import plot_2d_tour
 
 
 def nearest_city_wrt_tour(my_tour: Tour, current_city: City, verbose: bool = False):
@@ -53,7 +53,6 @@ def nearest_city_wrt_tour(my_tour: Tour, current_city: City, verbose: bool = Fal
                 best_distance = _distance_prev + _distance_next
                 best_city_prev = prev_city
                 best_city_next = next_city
-
     logging.info(f"Nearest City To The Tour: The nearest addition is {best_city_prev}-{current_city}-{best_city_next}")
     if verbose:
         print(
@@ -98,7 +97,7 @@ def nearest_addition_algorithm(original_instance: List[City], initial_city: City
         if not graph_step_by_step:
             plt.ion()
             plt.show()
-        plot(_tour.tour_cities, _instance, graph_velocity, graph_step_by_step)
+        plot_2d_tour(_tour.tour_cities, _instance, graph_velocity, graph_step_by_step)
 
     logging.info(f"Nearest Addition: Checking the starting point")
     logging.info(f"Nearest Addition: Original instance {original_instance}")
@@ -134,7 +133,7 @@ def nearest_addition_algorithm(original_instance: List[City], initial_city: City
         _instance.remove(_current_city)
         iterator_idx += 1
         if verbose:
-            plot(_tour.tour_cities, _instance, graph_velocity, graph_step_by_step)
+            plot_2d_tour(_tour.tour_cities, _instance, graph_velocity, graph_step_by_step)
 
     logging.info("Nearest Addition: Done.")
     logging.info(f"Nearest Addition: Checking if the tour is valid..")
@@ -152,7 +151,7 @@ def nearest_addition_algorithm(original_instance: List[City], initial_city: City
     logging.info("Nearest Addition: Ok.")
     logging.info(f"Nearest Addition: Tour length: {_tour.length():.3f}km")
     if verbose:
-        plot(_tour.tour_cities + [_tour.position(0)], _instance, graph_velocity, graph_step_by_step)
+        plot_2d_tour(_tour.tour_cities + [_tour.position(0)], _instance, graph_velocity, graph_step_by_step)
         print(f"Nearest Addition: Ok.")
         print(f"Nearest Addition: {_tour}")
         print(f"Nearest Addition: Tour length: {_tour.length():.3f}km")

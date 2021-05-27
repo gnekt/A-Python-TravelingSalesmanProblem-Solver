@@ -98,3 +98,4 @@ def nearest_neighbor_algorithm(original_instance: List[City], initial_city: City
         print(f"Nearest Neighbor: {_tour}")
         print(f"Nearest Neighbor: Tour length: {_tour.length():.3f}km")
     return _tour
+
