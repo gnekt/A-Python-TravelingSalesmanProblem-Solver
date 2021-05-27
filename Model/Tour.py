@@ -1,5 +1,8 @@
 import webbrowser
 from typing import  List
+
+from matplotlib import pyplot as plt
+
 from Model.City import City
 import logging
 import folium
@@ -129,16 +132,26 @@ class Tour:
     def plot(self):
         _complete_tour = self.tour_cities.copy()
         _complete_tour.append(self.tour_cities[0])
-        m = folium.Map(location=_complete_tour[0].get_coordinate())
-        folium.Marker(_complete_tour[0].get_coordinate(),
-                      icon=folium.Icon(color="red", prefix='fa', icon="car")).add_to(m)
-        for city in _complete_tour[1:-1]:
-            folium.Marker(city.get_coordinate(),
-                      icon=folium.Icon(color="green",prefix='fa',icon="info-circle")).add_to(m)
-        folium.PolyLine([(city.get_coordinate()) for city in _complete_tour],color="red"
-                            ,weight=2).add_to(m)
-        m.save(f"{self.tour_name}.html")
-        webbrowser.open(f"{self.tour_name}.html", new=2)
+        if self.tour_type == CityDataType.Geographical:
+            m = folium.Map(location=_complete_tour[0].get_coordinate())
+            folium.Marker(_complete_tour[0].get_coordinate(),
+                          icon=folium.Icon(color="red", prefix='fa', icon="car")).add_to(m)
+            for city in _complete_tour[1:-1]:
+                folium.Marker(city.get_coordinate(),
+                          icon=folium.Icon(color="green",prefix='fa',icon="info-circle")).add_to(m)
+            folium.PolyLine([(city.get_coordinate()) for city in _complete_tour],color="red"
+                                ,weight=2).add_to(m)
+            m.save(f"{self.tour_name}.html")
+            webbrowser.open(f"{self.tour_name}.html", new=2)
+        if self.tour_type == CityDataType.Euclidian_2D:
+            figure, scatter = plt.subplots()
+            x_1 = [tour_city.get_coordinate()[1] for tour_city in _complete_tour]
+            y_1 = [tour_city.get_coordinate()[0] for tour_city in _complete_tour]
+            scatter.plot(x_1, y_1, 'r-*')
+            scatter.set(title=f'Tour {self.tour_name}')
+            plt.show()
+            plt.savefig(f"{self.tour_name}.png")
+
 
     def position(self, position_number):
         """Return the city in the requested position"""

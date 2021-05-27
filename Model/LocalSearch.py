@@ -41,6 +41,7 @@ class LocalSearch:
             if not tour:
                 raise ValueError("We cannot start local search without a 1st solution")
             tour.append(tour.position(0))
+            tour.tour_name += " + Local Search"
             _length_history[_iteration] = tour.length()
             while True:
                 try:

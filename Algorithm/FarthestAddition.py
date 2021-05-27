@@ -81,7 +81,7 @@ def farthest_addition_algorithm(original_instance: List[City], initial_city: Cit
     if verbose:
         print("\n")
         print(f"Farthest Addition: HELLO :=)")
-    _tour: Tour = Tour(tour_type=original_instance[0].location_type)
+    _tour: Tour = Tour(tour_type=original_instance[0].location_type,tour_name="Farthest Addition")
 
     # we select an initial city and remove it from the instance
     if verbose:

@@ -36,7 +36,7 @@ def nearest_neighbor_algorithm(original_instance: List[City], initial_city: City
         print(f"Nearest Neighbor: HELLO :=)")
 
     # We could assume that the original instance has all the same coordinates type.
-    _tour: Tour = Tour(tour_type=original_instance[0].location_type)
+    _tour: Tour = Tour(tour_type=original_instance[0].location_type,tour_name="Nearest Neighbour")
 
     # we select an initial city and remove it from the instance
     if verbose:

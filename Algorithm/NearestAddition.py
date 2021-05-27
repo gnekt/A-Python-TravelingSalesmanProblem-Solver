@@ -80,7 +80,7 @@ def nearest_addition_algorithm(original_instance: List[City], initial_city: City
     if verbose:
         print("\n")
         print(f"Nearest Addition: HELLO :=)")
-    _tour: Tour = Tour(tour_type=original_instance[0].location_type)
+    _tour: Tour = Tour(tour_type=original_instance[0].location_type,tour_name="Nearest Addition")
 
     # we select an initial city and remove it from the instance
     if verbose:
