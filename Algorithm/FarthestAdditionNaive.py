@@ -69,7 +69,7 @@ def farthest_city_finder(instance: List[City], tour: Tour, verbose: bool = False
     return _farthest_list_[0][0], _farthest_list_[0][1], _farthest_list_[0][2]
 
 
-def farthest_algorithm_naive(original_instance: List[City], initial_city: City = None, verbose: bool = False,
+def farthest_addition_algorithm_naive(original_instance: List[City], initial_city: City = None, verbose: bool = False,
                              graph_velocity=0.01, graph_step_by_step=False):
     logging.info(f"Farthest Addition Naive: HELLO :=)")
     if verbose:

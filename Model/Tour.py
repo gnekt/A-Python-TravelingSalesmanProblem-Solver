@@ -4,7 +4,7 @@ from Model.City import City
 import logging
 import folium
 from Model.City import CityDataType
-
+import warnings
 
 class Tour:
     """
@@ -44,7 +44,14 @@ class Tour:
             raise TypeError("The city that you want to add has a different coordinates representation"
                             f"Tour: {self.tour_type.name}, City: {new_city.location_type.name}")
 
-        if new_city in self.tour_cities:
+        if len(self.tour_cities) > 1 and new_city == self.tour_cities[0]:
+            warnings.warn("Hey it looks like you want add again the initial city, maybe you want to represent the cycle\n"
+                          "But pay attention, all the algorithm treat the tour as a path that doesn't include at the end\n"
+                          "The starting point.\n"
+                          "So from now on, i can't guarantee the correctness of the solution, be aware of doing something"
+                          "Without thinking. Thank you :)")
+
+        if new_city in self.tour_cities and new_city != self.tour_cities[0]:
             raise ValueError("The city that you want to add is already in the tour")
 
         self.tour_cities.append(new_city)
@@ -78,7 +85,14 @@ class Tour:
             raise TypeError("The city that you want to add has a different coordinates representation"
                             f"Tour: {self.tour_type.name}, City: {new_city.location_type.name}")
 
-        if new_city in self.tour_cities:
+        if len(self.tour_cities) > 1 and new_city == self.tour_cities[0]:
+            warnings.warn("Hey it looks like you want add again the initial city, maybe you want to represent the cycle\n"
+                          "But pay attention, all the algorithm treat the tour as a path that doesn't include at the end\n"
+                          "The starting point.\n"
+                          "So from now on, i can't guarantee the correctness of the solution, be aware of doing something"
+                          "Without thinking. Thank you :)")
+
+        if new_city in self.tour_cities and new_city != self.tour_cities[0]:
             raise ValueError("The city that you want to add is already in the tour")
 
         self.tour_cities.insert(self.tour_cities.index(target_city)+1,new_city)

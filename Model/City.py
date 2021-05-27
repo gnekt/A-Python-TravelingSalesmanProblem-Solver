@@ -92,7 +92,7 @@ class City:
         if not other_city.location_type == self.location_type:
             return False
         if self.location_type == CityDataType.Euclidian_2D:
-            return self.get_coordinate() == other_city.get_coordinate
+            return self.get_coordinate() == other_city.get_coordinate()
         if self.location_type == CityDataType.Geographical:
             return self.__location.latitude == other_city.__location.latitude and \
                         self.__location.longitude == other_city.__location.longitude

@@ -114,3 +114,4 @@ dmypy.json
 .pyre/
 
 no_dimaio_key.json
+*.html

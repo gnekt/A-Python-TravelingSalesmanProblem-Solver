@@ -25,6 +25,7 @@ def nearest_city_wrt_tour(my_tour: Tour, current_city: City, verbose: bool = Fal
             f"\t \t Nearest City To The Tour: Starting looking from the source list of cities nearest to {current_city.name}")
 
     best_distance, best_city_prev, best_city_next = None, None, None
+    # If we have one city into the tour the behaviour change
     if len(my_tour) == 1:
         logging.info("Nearest City To The Tour: There is only one city in the tour, only one calculation.")
         if verbose:
@@ -63,7 +64,6 @@ def nearest_city_wrt_tour(my_tour: Tour, current_city: City, verbose: bool = Fal
 
 def maximum_min_distance_city_finder(instance: List[City], tour: Tour, verbose: bool = False):
     _nearest_list_ = []
-    idx = 0
     for city in instance:
         if verbose:
             print("\n")
@@ -75,7 +75,7 @@ def maximum_min_distance_city_finder(instance: List[City], tour: Tour, verbose: 
     return _nearest_list_[0][0], _nearest_list_[0][1], _nearest_list_[0][2]
 
 
-def farthest_algorithm(original_instance: List[City], initial_city: City = None, verbose: bool = False,
+def farthest_addition_algorithm(original_instance: List[City], initial_city: City = None, verbose: bool = False,
                        graph_velocity=0.01, graph_step_by_step=False):
     logging.info(f"Farthest Addition: HELLO :=)")
     if verbose:
