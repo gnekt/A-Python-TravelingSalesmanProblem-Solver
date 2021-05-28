@@ -7,7 +7,6 @@ from Model.Tour import Tour
 import TwoOpt
 from Utils.Plot import plot_local_search_line
 
-
 class Neighbourhood(Enum):
     TWO_OPT = 0
 
@@ -26,6 +25,7 @@ class LocalSearch:
             if exploration == Exploration.FIRST_IMPROVEMENT:
                 self.exploration = TwoOpt.first_improvement_evaluation
             self.evaluation = TwoOpt.delta_evaluation
+
 
     def local_search(self, tour=None, instances=None, constructive_algorithm=None, first_city=None, verbose=False):
         _length_history = {}

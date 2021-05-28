@@ -1,4 +1,6 @@
 from typing import List
+
+
 from Model.Tour import Tour
 from Model.City import City
 import logging

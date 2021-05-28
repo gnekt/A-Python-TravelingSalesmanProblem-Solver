@@ -1,9 +1,12 @@
 from typing import List
+
+
 from Model.Tour import Tour
 from Model.City import City
 import logging
 from Utils.Plot import plot_2d_tour
 from matplotlib import pyplot as plt
+
 
 def nearest_city(instance: List[City], current_city: City, verbose: bool = False):
     """
