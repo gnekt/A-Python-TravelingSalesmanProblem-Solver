@@ -70,7 +70,7 @@ def farthest_city_finder(instance: List[City], tour: Tour, verbose: bool = False
 
 
 def farthest_addition_algorithm_naive(original_instance: List[City], initial_city: City = None, verbose: bool = False,
-                             graph_velocity=0.01, graph_step_by_step=False):
+                             scatter=None,graph_velocity=0.01, graph_step_by_step=False):
     logging.info(f"Farthest Addition Naive: HELLO :=)")
     if verbose:
         print("\n")
@@ -91,9 +91,13 @@ def farthest_addition_algorithm_naive(original_instance: List[City], initial_cit
     if verbose:
         if not graph_step_by_step:
             plt.ion()
-            plt.show()
-        plot_2d_tour(_tour.tour_cities, _instance, graph_velocity, graph_step_by_step)
 
+        if not scatter:
+            fig, scatter = plt.subplots()
+            plt.show()
+
+        plot_2d_tour(scatter=scatter, tour=_tour.tour_cities, instances=_instance, velocity=graph_velocity,
+                     graph_step_by_step=graph_step_by_step)
     logging.info(f"Farthest Addition Naive: Checking the starting point")
     logging.info(f"Farthest Addition Naive: Original instance {original_instance}")
     logging.info(f"Farthest Addition Naive: Starting city {_current_city.name}")
@@ -126,7 +130,7 @@ def farthest_addition_algorithm_naive(original_instance: List[City], initial_cit
         _instance.remove(_current_city)
         iterator_idx += 1
         if verbose:
-            plot_2d_tour(_tour.tour_cities, _instance, graph_velocity, graph_step_by_step)
+            plot_2d_tour(scatter=scatter,tour=_tour.tour_cities, instances=_instance, velocity=graph_velocity, graph_step_by_step=graph_step_by_step)
 
     logging.info("Farthest Addition Naive: Done.")
     logging.info(f"Farthest Addition Naive: Checking if the tour is valid..")
@@ -144,7 +148,9 @@ def farthest_addition_algorithm_naive(original_instance: List[City], initial_cit
     logging.info("Farthest Addition Naive: Ok.")
     logging.info(f"Farthest Addition Naive: Tour length: {_tour.length():.3f}km")
     if verbose:
-        plot_2d_tour(_tour.tour_cities + [_tour.position(0)], _instance, graph_velocity, graph_step_by_step)
+        plot_2d_tour(scatter=scatter, tour=_tour.tour_cities + [_tour.position(0)], instances=_instance,
+                     velocity=graph_velocity,
+                     graph_step_by_step=graph_step_by_step)
         print(f"Farthest Addition Naive: Ok.")
         print(f"Farthest Addition Naive: {_tour}")
         print(f"Farthest Addition Naive: Tour length: {_tour.length():.3f}km")

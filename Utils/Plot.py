@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 def plot_2d_tour(tour, velocity, graph_step_by_step, instances=None, figure=None, scatter=None):
     if not scatter:
         figure, scatter = plt.subplots()
+
+    scatter.clear()
     x_1 = [tour_cities.get_coordinate()[1] for tour_cities in tour]
     y_1 = [tour_cities.get_coordinate()[0] for tour_cities in tour]
     scatter.plot(x_1, y_1,'r-*')

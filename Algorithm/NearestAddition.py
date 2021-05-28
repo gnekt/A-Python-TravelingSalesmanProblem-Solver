@@ -75,7 +75,7 @@ def nearest_city_finder(instance: List[City], tour: Tour, verbose: bool = False)
 
 
 def nearest_addition_algorithm(original_instance: List[City], initial_city: City = None, verbose: bool = False,
-                               graph_velocity=0.01, graph_step_by_step=False):
+                               scatter=None,graph_velocity=0.01, graph_step_by_step=False):
     logging.info(f"Nearest Addition: HELLO :=)")
     if verbose:
         print("\n")
@@ -96,8 +96,13 @@ def nearest_addition_algorithm(original_instance: List[City], initial_city: City
     if verbose:
         if not graph_step_by_step:
             plt.ion()
+
+        if not scatter:
+            fig, scatter = plt.subplots()
             plt.show()
-        plot_2d_tour(_tour.tour_cities, _instance, graph_velocity, graph_step_by_step)
+
+        plot_2d_tour(scatter=scatter, tour=_tour.tour_cities, instances=_instance, velocity=graph_velocity,
+                     graph_step_by_step=graph_step_by_step)
 
     logging.info(f"Nearest Addition: Checking the starting point")
     logging.info(f"Nearest Addition: Original instance {original_instance}")
@@ -133,7 +138,7 @@ def nearest_addition_algorithm(original_instance: List[City], initial_city: City
         _instance.remove(_current_city)
         iterator_idx += 1
         if verbose:
-            plot_2d_tour(_tour.tour_cities, _instance, graph_velocity, graph_step_by_step)
+            plot_2d_tour(scatter=scatter,tour=_tour.tour_cities, instances=_instance, velocity=graph_velocity, graph_step_by_step=graph_step_by_step)
 
     logging.info("Nearest Addition: Done.")
     logging.info(f"Nearest Addition: Checking if the tour is valid..")
@@ -151,7 +156,9 @@ def nearest_addition_algorithm(original_instance: List[City], initial_city: City
     logging.info("Nearest Addition: Ok.")
     logging.info(f"Nearest Addition: Tour length: {_tour.length():.3f}km")
     if verbose:
-        plot_2d_tour(_tour.tour_cities + [_tour.position(0)], _instance, graph_velocity, graph_step_by_step)
+        plot_2d_tour(scatter=scatter, tour=_tour.tour_cities + [_tour.position(0)], instances=_instance,
+                     velocity=graph_velocity,
+                     graph_step_by_step=graph_step_by_step)
         print(f"Nearest Addition: Ok.")
         print(f"Nearest Addition: {_tour}")
         print(f"Nearest Addition: Tour length: {_tour.length():.3f}km")

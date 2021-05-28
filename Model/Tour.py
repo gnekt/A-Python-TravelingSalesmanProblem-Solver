@@ -149,8 +149,9 @@ class Tour:
             y_1 = [tour_city.get_coordinate()[0] for tour_city in _complete_tour]
             scatter.plot(x_1, y_1, 'r-*')
             scatter.set(title=f'Tour {self.tour_name}')
-            plt.show()
             plt.savefig(f"{self.tour_name}.png")
+            plt.show()
+
 
 
     def position(self, position_number):

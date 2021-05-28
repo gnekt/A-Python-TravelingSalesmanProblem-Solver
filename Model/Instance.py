@@ -16,7 +16,7 @@ class Instance:
     def __file_loader(self, path, verbose=False) -> List[City]:
         _instance = []
         if self.loader_type == InstanceSourceType.File:
-            with open("./data sets/tsplib/dj38.tsp", "r") as file:
+            with open(path, "r") as file:
                 _coordinate_types = CityDataType.Euclidian_2D
                 while file:
                     line = file.readline()
@@ -41,10 +41,9 @@ class Instance:
                                               city_name=str(name), verbose=verbose))
         return _instance
 
-    def __online_loader(self, verbose=False):
+    def __online_loader(self,sheet="Network Optimization - Di Maio", verbose=False):
         gc = gspread.service_account(filename="./no_dimaio_key.json")
-
-        sh = gc.open("Network Optimization - Di Maio")
+        sh = gc.open(sheet)
         worksheet = sh.worksheet("Loader")
         coordinates_type = CityDataType.Euclidian_2D \
             if worksheet.col_values(4)[0] == CityDataType.Euclidian_2D.name \
@@ -82,11 +81,11 @@ class Instance:
 
         worksheet.update_cells(cells)
 
-    def loader(self, path=None, verbose=False):
+    def loader(self, path=None,gsheet_name="Network Optimization - Di Maio", verbose=False):
         if self.loader_type == InstanceSourceType.File:
             return self.__file_loader(path=path)
         else:
-            return self.__online_loader()
+            return self.__online_loader(sheet=gsheet_name)
 
     def writer(self, file_name, tour, verbose=False):
         if self.loader_type == InstanceSourceType.File:

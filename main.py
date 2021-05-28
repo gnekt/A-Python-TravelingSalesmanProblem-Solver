@@ -16,6 +16,10 @@ if __name__ == "__main__":
     instance = interface.loader("",verbose=verbose_mode)
 
     logging.info("Finished")
+    tour = repeated_constructive_algorithm(instances=instance,constructive_algorithm=farthest_addition_algorithm,verbose=verbose_mode)
+    tour = farthest_addition_algorithm(original_instance=instance,initial_city=None,verbose=True)
+    print(tour.length())
+    tour.plot()
     # tour = repeated_constructive_algorithm(instance,nearest_neighbor_algorithm)
     # print(tour.length())
     # local_search = LocalSearch(neighbourood=Neighbourhood.TWO_OPT,exploration=Exploration.FIRST_IMPROVEMENT)

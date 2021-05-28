@@ -2,7 +2,8 @@ from typing import List
 from Model.Tour import Tour
 from Model.City import City
 import logging
-
+from Utils.Plot import plot_2d_tour
+from matplotlib import pyplot as plt
 
 def nearest_city(instance: List[City], current_city: City, verbose: bool = False):
     """
@@ -29,7 +30,8 @@ def nearest_city(instance: List[City], current_city: City, verbose: bool = False
     return best_city
 
 
-def nearest_neighbor_algorithm(original_instance: List[City], initial_city: City = None, verbose: bool = False):
+def nearest_neighbor_algorithm(original_instance: List[City], initial_city: City = None, verbose: bool = False,
+                               scatter=None,graph_velocity=0.01, graph_step_by_step=False):
     logging.info(f"Nearest Neighbor: HELLO :=)")
     if verbose:
         print("\n")
@@ -48,6 +50,17 @@ def nearest_neighbor_algorithm(original_instance: List[City], initial_city: City
     _current_city: City = _instance[-1] if not initial_city else initial_city
     _instance.remove(_current_city)
     _tour.append(_current_city)
+
+    if verbose:
+        if not graph_step_by_step:
+            plt.ion()
+
+        if not scatter:
+            fig, scatter = plt.subplots()
+            plt.show()
+
+        plot_2d_tour(scatter=scatter, tour=_tour.tour_cities, instances=_instance, velocity=graph_velocity,
+                     graph_step_by_step=graph_step_by_step)
 
     logging.info(f"Nearest Neighbor: Checking the starting point")
     logging.info(f"Nearest Neighbor: Original instance {original_instance}")
@@ -77,6 +90,8 @@ def nearest_neighbor_algorithm(original_instance: List[City], initial_city: City
             print("\n")
             print(f"Nearest Neighbor: Adding {_current_city} to the tour")
         iterator_idx += 1
+        if verbose:
+            plot_2d_tour(scatter=scatter,tour=_tour.tour_cities, instances=_instance, velocity=graph_velocity, graph_step_by_step=graph_step_by_step)
 
     logging.info("Nearest Neighbor: Done.")
     logging.info(f"Nearest Neighbor: Checking if the tour is valid..")
@@ -94,6 +109,9 @@ def nearest_neighbor_algorithm(original_instance: List[City], initial_city: City
     logging.info("Nearest Neighbor: Ok.")
     logging.info(f"Nearest Neighbor: Tour length: {_tour.length():.3f}km")
     if verbose:
+        plot_2d_tour(scatter=scatter, tour=_tour.tour_cities + [_tour.position(0)], instances=_instance,
+                     velocity=graph_velocity,
+                     graph_step_by_step=graph_step_by_step)
         print(f"Nearest Neighbor: Ok.")
         print(f"Nearest Neighbor: {_tour}")
         print(f"Nearest Neighbor: Tour length: {_tour.length():.3f}km")
