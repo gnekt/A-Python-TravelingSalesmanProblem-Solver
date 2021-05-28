@@ -1,8 +1,18 @@
+#############################################
+# Coded by the professor Marco Pranzo @ 2021 NO Lab
+#
 from Model.Tour import Tour
 
 
-def delta_evaluation(tour: Tour, pos1: int, pos3: int, verbose=False):
-    """Returns True if the move is improving."""
+def delta_evaluation(tour: Tour, pos1: int, pos3: int, verbose=False) -> bool:
+    """
+    Perform the delta evaluation for the 2-opt exchange
+    :param tour: The current tour
+    :param pos1: The position I target city
+    :param pos3: The position J target city
+    :param verbose: Verbose mode
+    :return: (True) if the movement is a good one, (False) otherwise
+    """
     c1 = tour.position(pos1)
     c2 = tour.position(pos1 + 1)
     c3 = tour.position(pos3)
@@ -20,7 +30,15 @@ def delta_evaluation(tour: Tour, pos1: int, pos3: int, verbose=False):
     return removed_costs > added_costs
 
 
-def move2opt(tour: Tour, pos1: int, pos3: int, verbose=False):
+def move2opt(tour: Tour, pos1: int, pos3: int, verbose=False) -> Tour:
+    """
+    Perform the 2-opt exchange
+    :param tour: The current tour
+    :param pos1: The position I target city
+    :param pos3: The position J target city
+    :param verbose: Verbose mode
+    :return: The re-arranged tour
+    """
     # build the three segments
     segment1 = tour.tour_cities[:(pos1 + 1)]
     segment2 = tour.tour_cities[(pos1 + 1):(pos3 + 1)]
@@ -39,7 +57,13 @@ def move2opt(tour: Tour, pos1: int, pos3: int, verbose=False):
     return tour
 
 
-def first_improvement_evaluation(tour: Tour, verbose=False):
+def first_improvement_evaluation(tour: Tour, verbose=False) -> (int,int):
+    """
+    Perform the first improvement exploration of neighbour
+    :param tour: The current tour
+    :param verbose: Verbose mode
+    :return: The neighbour which improve, in term of position in the tour (int,int)->(i,j)city
+    """
     """Look for the first improvement. Return pos1 and pos3"""
     for pos1 in range(int(len(tour.tour_cities) - 3)):
         for pos3 in range(pos1 + 2, len(tour.tour_cities) - 1):

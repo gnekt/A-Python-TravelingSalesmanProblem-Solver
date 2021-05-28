@@ -1,6 +1,8 @@
+#############################################
+# Created by Christian Di Maio, github : @christiandimaio
+# v 0.1
 from typing import List
-
-
+import matplotlib
 from Model.Tour import Tour
 from Model.City import City
 import logging
@@ -8,9 +10,9 @@ from Utils.Plot import plot_2d_tour
 from matplotlib import pyplot as plt
 
 
-def nearest_city(instance: List[City], current_city: City, verbose: bool = False):
+def nearest_city(instance: List[City], current_city: City, verbose: bool = False) -> City:
     """
-    Check the nearest city to current city, among all the cities (instance)
+    Check the nearest city among all the cities (instance) to current city,
     :param instance: The source list of cities
     :param current_city: The target city
     :param verbose: Verbose mode
@@ -34,14 +36,25 @@ def nearest_city(instance: List[City], current_city: City, verbose: bool = False
 
 
 def nearest_neighbor_algorithm(original_instance: List[City], initial_city: City = None, verbose: bool = False,
-                               scatter=None,graph_velocity=0.01, graph_step_by_step=False):
+                               scatter: matplotlib.axes.Axes = None, graph_velocity: float = 0.01,
+                               graph_step_by_step: bool = False) -> Tour:
+    """
+        Create a tour using the nearest neighbor criterion
+        :param original_instance: The original instance of cities
+        :param initial_city: (Optional) The initial city to start the tour
+        :param verbose: Verbose mode
+        :param scatter: If you want to plot the tour creation progress in another figure(defined outside)
+        :param graph_velocity: The velocity on which the matplotlib figure is update in second
+        :param graph_step_by_step: If True the figure showing is blocking, otherwise is no locking
+        :return: A valid tour
+    """
     logging.info(f"Nearest Neighbor: HELLO :=)")
     if verbose:
         print("\n")
         print(f"Nearest Neighbor: HELLO :=)")
 
     # We could assume that the original instance has all the same coordinates type.
-    _tour: Tour = Tour(tour_type=original_instance[0].location_type,tour_name="Nearest Neighbour")
+    _tour: Tour = Tour(tour_type=original_instance[0].location_type, tour_name="Nearest Neighbour")
 
     # we select an initial city and remove it from the instance
     if verbose:
@@ -57,7 +70,6 @@ def nearest_neighbor_algorithm(original_instance: List[City], initial_city: City
     if verbose:
         if not graph_step_by_step:
             plt.ion()
-
         if not scatter:
             fig, scatter = plt.subplots()
             plt.show()
@@ -94,7 +106,8 @@ def nearest_neighbor_algorithm(original_instance: List[City], initial_city: City
             print(f"Nearest Neighbor: Adding {_current_city} to the tour")
         iterator_idx += 1
         if verbose:
-            plot_2d_tour(scatter=scatter,tour=_tour.tour_cities, instances=_instance, velocity=graph_velocity, graph_step_by_step=graph_step_by_step)
+            plot_2d_tour(scatter=scatter, tour=_tour.tour_cities, instances=_instance, velocity=graph_velocity,
+                         graph_step_by_step=graph_step_by_step)
 
     logging.info("Nearest Neighbor: Done.")
     logging.info(f"Nearest Neighbor: Checking if the tour is valid..")
@@ -119,4 +132,3 @@ def nearest_neighbor_algorithm(original_instance: List[City], initial_city: City
         print(f"Nearest Neighbor: {_tour}")
         print(f"Nearest Neighbor: Tour length: {_tour.length():.3f}km")
     return _tour
-

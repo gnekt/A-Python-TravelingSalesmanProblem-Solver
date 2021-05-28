@@ -54,12 +54,12 @@ if __name__ == "__main__":
     if apply_local_search:
         local_search = LocalSearch(neighbourood=Neighbourhood.TWO_OPT, exploration=Exploration.FIRST_IMPROVEMENT)
     if repeated_version:
-        tour = repeated_constructive_algorithm(instances=instance,constructive_algorithm=nearest_addition_algorithm,verbose=verbose_mode)
+        tour = repeated_constructive_algorithm(original_instance=instance,constructive_algorithm=nearest_addition_algorithm,verbose=verbose_mode)
         if apply_local_search:
             tour = local_search.local_search(tour=tour,verbose=verbose_mode)
     else:
         if apply_local_search:
-            tour = local_search.local_search(instances=instance,constructive_algorithm=nearest_addition_algorithm,
+            tour = local_search.local_search(original_instance=instance,constructive_algorithm=nearest_addition_algorithm,
                                                   verbose=verbose_mode)
         else:
             tour = nearest_addition_algorithm(original_instance=instance,verbose=verbose_mode)

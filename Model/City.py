@@ -1,7 +1,8 @@
-import random
+#############################################
+# Created by Christian Di Maio, github : @christiandimaio
+# v 0.1
 from enum import Enum
 from math import sqrt
-
 from Model import geolocator
 from geopy.distance import geodesic
 import logging
@@ -32,7 +33,7 @@ class City:
         :param coord_y: The latitude in Geographical format, or the Y-axis in Euclidian_2D format
         :param city_name: The name of the City
         :param verbose: Verbose modality
-        :exception: If the latitude or longitude are not in the format of Geo or the exceed their value
+        :exception: If the latitude or longitude are not in the format of Geo or they exceed their value
         :exception: If the name of the city is empty or not passed
         """
         logging.info("City: Starting to initialize a city..")
@@ -48,6 +49,7 @@ class City:
 
         self.location_type = location_info_type
 
+        # Check if the coordinates are valid
         if self.location_type == CityDataType.Geographical:
             if not type(coord_y) is float or not type(coord_x) is float:
                 raise TypeError(f"Wrong coordinates type, got lat:{coord_y}, long:{coord_x}")
@@ -86,9 +88,18 @@ class City:
             return self.__location.latitude, self.__location.longitude
 
     def __repr__(self):
+        """
+        Representation of a city in term of its name.
+        :return:
+        """
         return f"{self.name}"
 
     def __eq__(self, other_city):
+        """
+        Equal over-ride, two cities are equal if the belongs to the same coordinates
+        :param other_city: The other city to evaluate
+        :return: a bool object which represent if the statement holds or not
+        """
         if not other_city.location_type == self.location_type:
             return False
         if self.location_type == CityDataType.Euclidian_2D:
@@ -100,10 +111,11 @@ class City:
 
     def distance(self, other_city, unit_of_measure: str = "km", verbose: bool = False) -> float:
         """
-        Retrieve the distance using the geodesic distance *ref geopy*
+        Retrieve the distance -> using the geodesic distance *ref geopy* if the coordinates are type Geographical
+                              -> euclidean distance if the coordinates are Euclidian_2D
         :param verbose: Verbose modality
-        :param unit_of_measure: The unit of measurement that we want to retrieve, km as default
-        :param other_city: The other city as object of City, which we want to retrieve the distance
+        :param unit_of_measure: The unit of measurement that we want to retrieve, km as default (Useless for coord_type EUC_2D)
+        :param other_city: The other city which we want to retrieve the distance
         :return: The distance between this two city
         :type other_city: City
         :exception: If other_city is not class City return an exception

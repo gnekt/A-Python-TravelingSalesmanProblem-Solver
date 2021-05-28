@@ -1,18 +1,21 @@
+#############################################
+# Created by Christian Di Maio, github : @christiandimaio
+# v 0.1
 import webbrowser
-from typing import  List
-
+from typing import List
 from matplotlib import pyplot as plt
-
 from Model.City import City
 import logging
 import folium
 from Model.City import CityDataType
 import warnings
 
+
 class Tour:
     """
     Class which represent the tour (hamiltonian cycle) solving a TSP.
     """
+
     def __init__(self, tour_type: CityDataType, tour_name: str = "Tour", verbose: bool = False):
         """
         Constructor of the tour, it will start empty if no instance is loaded.
@@ -48,11 +51,12 @@ class Tour:
                             f"Tour: {self.tour_type.name}, City: {new_city.location_type.name}")
 
         if len(self.tour_cities) > 1 and new_city == self.tour_cities[0]:
-            warnings.warn("Hey it looks like you want add again the initial city, maybe you want to represent the cycle\n"
-                          "But pay attention, all the algorithm treat the tour as a path that doesn't include at the end\n"
-                          "The starting point.\n"
-                          "So from now on, i can't guarantee the correctness of the solution, be aware of doing something"
-                          "Without thinking. Thank you :)")
+            warnings.warn(
+                "Hey it looks like you want add again the initial city, maybe you want to represent the cycle\n"
+                "But pay attention, all the algorithm treat the tour as a path that doesn't include at the end\n"
+                "The starting point.\n"
+                "So from now on, i can't guarantee the correctness of the solution, be aware of doing something"
+                "Without thinking. Thank you :)")
 
         if new_city in self.tour_cities and new_city != self.tour_cities[0]:
             raise ValueError("The city that you want to add is already in the tour")
@@ -89,16 +93,17 @@ class Tour:
                             f"Tour: {self.tour_type.name}, City: {new_city.location_type.name}")
 
         if len(self.tour_cities) > 1 and new_city == self.tour_cities[0]:
-            warnings.warn("Hey it looks like you want add again the initial city, maybe you want to represent the cycle\n"
-                          "But pay attention, all the algorithm treat the tour as a path that doesn't include at the end\n"
-                          "The starting point.\n"
-                          "So from now on, i can't guarantee the correctness of the solution, be aware of doing something"
-                          "Without thinking. Thank you :)")
+            warnings.warn(
+                "Hey it looks like you want add again the initial city, maybe you want to represent the cycle\n"
+                "But pay attention, all the algorithm treat the tour as a path that doesn't include at the end\n"
+                "The starting point.\n"
+                "So from now on, i can't guarantee the correctness of the solution, be aware of doing something"
+                "Without thinking. Thank you :)")
 
         if new_city in self.tour_cities and new_city != self.tour_cities[0]:
             raise ValueError("The city that you want to add is already in the tour")
 
-        self.tour_cities.insert(self.tour_cities.index(target_city)+1,new_city)
+        self.tour_cities.insert(self.tour_cities.index(target_city) + 1, new_city)
         logging.info("Tour: Ok.")
         return True
 
@@ -116,7 +121,7 @@ class Tour:
         # Assuming that even it is passed to distance the unit of measure, if they are euclidian this
         #       parameter is skipped, so to abbreviate the code we can remain it without if and we are sure
         #           that it works. :)
-        _length += prev_city.distance(self.tour_cities[0],unit_of_measure=unit_of_measurement)
+        _length += prev_city.distance(self.tour_cities[0], unit_of_measure=unit_of_measurement)
         return _length
 
     def is_valid(self, instance: List[City]) -> bool:
@@ -130,6 +135,11 @@ class Tour:
         return False
 
     def plot(self):
+        """
+        Plot a tour according to the type of coordinates used for the city in the tour,
+            - Folium if the coordinates are in Geographical representation
+            - Matplotlib if the coordinates are in Euclidean representation
+        """
         _complete_tour = self.tour_cities.copy()
         _complete_tour.append(self.tour_cities[0])
         if self.tour_type == CityDataType.Geographical:
@@ -138,9 +148,9 @@ class Tour:
                           icon=folium.Icon(color="red", prefix='fa', icon="car")).add_to(m)
             for city in _complete_tour[1:-1]:
                 folium.Marker(city.get_coordinate(),
-                          icon=folium.Icon(color="green",prefix='fa',icon="info-circle")).add_to(m)
-            folium.PolyLine([(city.get_coordinate()) for city in _complete_tour],color="red"
-                                ,weight=2).add_to(m)
+                              icon=folium.Icon(color="green", prefix='fa', icon="info-circle")).add_to(m)
+            folium.PolyLine([(city.get_coordinate()) for city in _complete_tour], color="red"
+                            , weight=2).add_to(m)
             m.save(f"{self.tour_name}.html")
             webbrowser.open(f"{self.tour_name}.html", new=2)
         if self.tour_type == CityDataType.Euclidian_2D:
@@ -152,14 +162,20 @@ class Tour:
             plt.savefig(f"{self.tour_name}.png")
             plt.show()
 
-
-
-    def position(self, position_number):
-        """Return the city in the requested position"""
+    def position(self, position_number: int) -> City:
+        """
+        Return the city in the requested position
+        :param position_number: The index of the city in the tour that we want to retrieve
+        :return: A City
+        """
         if position_number < 0 or position_number >= len(self.tour_cities):
             raise Exception(f"ERROR: Accessing outside the tour ({position_number})")
         return self.tour_cities[position_number]
 
     def remove(self, position_number):
-        """Remove a city from the tour based on the position"""
+        """
+        Remove a city from the tour based on the position
+        :param position_number: The index of the city in the tour that we want to retrieve
+        :return: A City
+        """
         del self.tour_cities[position_number]

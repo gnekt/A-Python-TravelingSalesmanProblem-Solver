@@ -1,21 +1,22 @@
+#############################################
+# Created by Christian Di Maio, github : @christiandimaio
+# v 0.1
 from typing import List
-
+import matplotlib
 from matplotlib import pyplot as plt
-
 from Model.Tour import Tour
 from Model.City import City
 import logging
-
 from Utils.Plot import plot_2d_tour
 
 
-def nearest_city_wrt_tour(my_tour: Tour, current_city: City, verbose: bool = False):
+def nearest_city_wrt_tour(my_tour: Tour, current_city: City, verbose: bool = False) -> (City,City,float):
     """
-    Check the nearest city to current city, among all the cities (instance)
-    :param my_tour: The source list of cities
+    Given a city, evaluate the two adjacent city on the tour that are nearest to the given one
+    :param my_tour: The current tour
     :param current_city: The target city
     :param verbose: Verbose mode
-    :return: The nearest city over the instance
+    :return: The 2 cities of the tour that fit the constraint and the distance
     """
     logging.info(
         f"Nearest City To The Tour: Starting looking from the source list of cities nearest to {current_city.name}")
@@ -60,7 +61,15 @@ def nearest_city_wrt_tour(my_tour: Tour, current_city: City, verbose: bool = Fal
     return best_city_prev, best_city_next, best_distance
 
 
-def nearest_city_finder(instance: List[City], tour: Tour, verbose: bool = False):
+def nearest_city_finder(instance: List[City], tour: Tour, verbose: bool = False) -> (City,City,City):
+    """
+        Evaluate the minimum among the nearest city of the instance, wrt the tour
+        :param instance: Cities that are out of the tour
+        :param tour: The current tour
+        :param verbose: Verbose mode
+        :return: Return the new city that will be added to the tour, in this form (Previous city of the tour,City to add,
+                    Next city of the tour)
+    """
     _nearest_list_ = []
     idx = 0
     for city in instance:
@@ -75,12 +84,23 @@ def nearest_city_finder(instance: List[City], tour: Tour, verbose: bool = False)
 
 
 def nearest_addition_algorithm(original_instance: List[City], initial_city: City = None, verbose: bool = False,
-                               scatter=None,graph_velocity=0.01, graph_step_by_step=False):
+                               scatter: matplotlib.axes.Axes = None, graph_velocity: float = 0.01,
+                               graph_step_by_step: bool = False) -> Tour:
+    """
+        Create a tour using the nearest addition criterion
+        :param original_instance: The original instance of cities
+        :param initial_city: (Optional) The initial city to start the tour
+        :param verbose: Verbose mode
+        :param scatter: If you want to plot the tour creation progress in another figure(defined outside)
+        :param graph_velocity: The velocity on which the matplotlib figure is update in second
+        :param graph_step_by_step: If True the figure showing is blocking, otherwise is no locking
+        :return: A valid tour
+    """
     logging.info(f"Nearest Addition: HELLO :=)")
     if verbose:
         print("\n")
         print(f"Nearest Addition: HELLO :=)")
-    _tour: Tour = Tour(tour_type=original_instance[0].location_type,tour_name="Nearest Addition")
+    _tour: Tour = Tour(tour_type=original_instance[0].location_type, tour_name="Nearest Addition")
 
     # we select an initial city and remove it from the instance
     if verbose:
@@ -138,7 +158,8 @@ def nearest_addition_algorithm(original_instance: List[City], initial_city: City
         _instance.remove(_current_city)
         iterator_idx += 1
         if verbose:
-            plot_2d_tour(scatter=scatter,tour=_tour.tour_cities, instances=_instance, velocity=graph_velocity, graph_step_by_step=graph_step_by_step)
+            plot_2d_tour(scatter=scatter, tour=_tour.tour_cities, instances=_instance, velocity=graph_velocity,
+                         graph_step_by_step=graph_step_by_step)
 
     logging.info("Nearest Addition: Done.")
     logging.info(f"Nearest Addition: Checking if the tour is valid..")

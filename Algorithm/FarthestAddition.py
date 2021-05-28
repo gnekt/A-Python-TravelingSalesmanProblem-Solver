@@ -1,17 +1,19 @@
+#############################################
+# Created by Christian Di Maio, github : @christiandimaio
+# v 0.1
 from typing import List
-
+import matplotlib
 from matplotlib import pyplot as plt
-
 from Model.Tour import Tour
 from Model.City import City
 import logging
 from Utils.Plot import plot_2d_tour
 
 
-def nearest_city_wrt_tour(my_tour: Tour, current_city: City, verbose: bool = False) -> (City,City,float):
+def nearest_city_wrt_tour(my_tour: Tour, current_city: City, verbose: bool = False) -> (City, City, float):
     """
     Given a city, evaluate the two adjacent city on the tour that are nearest to the given one
-    :param my_tour: The tour
+    :param my_tour: The current tour
     :param current_city: The target city
     :param verbose: Verbose mode
     :return: The 2 cities of the tour that fit the constraint and the distance
@@ -61,7 +63,7 @@ def nearest_city_wrt_tour(my_tour: Tour, current_city: City, verbose: bool = Fal
     return best_city_prev, best_city_next, best_distance
 
 
-def maximum_min_distance_city_finder(instance: List[City], tour: Tour, verbose: bool = False) -> (City,City,City):
+def maximum_min_distance_city_finder(instance: List[City], tour: Tour, verbose: bool = False) -> (City, City, City):
     """
     Evaluate the maximum among the nearest city of the instance over a tour
     :param instance: The city that are out of the tour
@@ -83,22 +85,23 @@ def maximum_min_distance_city_finder(instance: List[City], tour: Tour, verbose: 
 
 
 def farthest_addition_algorithm(original_instance: List[City], initial_city: City = None, verbose: bool = False,
-                       scatter=None,graph_velocity=0.01, graph_step_by_step=False):
+                                scatter: matplotlib.axes.Axes = None, graph_velocity: float = 0.01,
+                                graph_step_by_step: bool = False) -> Tour:
     """
-    Create a tour using the farthest addition criterion
-    :param original_instance: The original instance of cities
-    :param initial_city: (Optional) The initial city to start the tour
-    :param verbose: Verbose mode
-    :param scatter: If you want to plot the tour creation progress in another figure(defined outside)
-    :param graph_velocity: The velocity on which the matplotlib figure is update in second
-    :param graph_step_by_step: If True the figure showing is blocking, otherwise is no locking
-    :return: A valid tour
+        Create a tour using the farthest addition criterion
+        :param original_instance: The original instance of cities
+        :param initial_city: (Optional) The initial city to start the tour
+        :param verbose: Verbose mode
+        :param scatter: If you want to plot the tour creation progress in another figure(defined outside)
+        :param graph_velocity: The velocity on which the matplotlib figure is update in second
+        :param graph_step_by_step: If True the figure showing is blocking, otherwise is no locking
+        :return: A valid tour
     """
     logging.info(f"Farthest Addition: HELLO :=)")
     if verbose:
         print("\n")
         print(f"Farthest Addition: HELLO :=)")
-    _tour: Tour = Tour(tour_type=original_instance[0].location_type,tour_name="Farthest Addition")
+    _tour: Tour = Tour(tour_type=original_instance[0].location_type, tour_name="Farthest Addition")
 
     # we select an initial city and remove it from the instance
     if verbose:
@@ -119,7 +122,8 @@ def farthest_addition_algorithm(original_instance: List[City], initial_city: Cit
             fig, scatter = plt.subplots()
             plt.show()
 
-        plot_2d_tour(scatter=scatter,tour=_tour.tour_cities, instances=_instance, velocity=graph_velocity, graph_step_by_step=graph_step_by_step)
+        plot_2d_tour(scatter=scatter, tour=_tour.tour_cities, instances=_instance, velocity=graph_velocity,
+                     graph_step_by_step=graph_step_by_step)
 
     logging.info(f"Farthest Addition: Checking the starting point")
     logging.info(f"Farthest Addition: Original instance {original_instance}")
@@ -155,7 +159,8 @@ def farthest_addition_algorithm(original_instance: List[City], initial_city: Cit
         _instance.remove(_current_city)
         iterator_idx += 1
         if verbose:
-            plot_2d_tour(scatter=scatter,tour=_tour.tour_cities, instances=_instance, velocity=graph_velocity, graph_step_by_step=graph_step_by_step)
+            plot_2d_tour(scatter=scatter, tour=_tour.tour_cities, instances=_instance, velocity=graph_velocity,
+                         graph_step_by_step=graph_step_by_step)
 
     logging.info("Farthest Addition: Done.")
     logging.info(f"Farthest Addition: Checking if the tour is valid..")
@@ -174,7 +179,8 @@ def farthest_addition_algorithm(original_instance: List[City], initial_city: Cit
     logging.info(f"Farthest Addition: Tour length: {_tour.length():.3f}km")
 
     if verbose:
-        plot_2d_tour(scatter=scatter, tour=_tour.tour_cities+[_tour.position(0)], instances=_instance, velocity=graph_velocity,
+        plot_2d_tour(scatter=scatter, tour=_tour.tour_cities + [_tour.position(0)], instances=_instance,
+                     velocity=graph_velocity,
                      graph_step_by_step=graph_step_by_step)
         print(f"Farthest Addition: Ok.")
         print(f"Farthest Addition: {_tour}")

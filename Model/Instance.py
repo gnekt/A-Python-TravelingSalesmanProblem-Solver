@@ -1,19 +1,44 @@
+#############################################
+# Created by Christian Di Maio, github : @christiandimaio
+# v 0.1
 from enum import Enum
 from Model.City import City, CityDataType
 from typing import List
 import gspread
 
+from Tour import Tour
+
 
 class InstanceSourceType(Enum):
-    File = 0
-    GoogleSheet = 1
+    """
+    Enumerator for defining the type of the source file
+    """
+    File = 0 # It comes from a file
+    GoogleSheet = 1 # It comes from google sheet
 
 
 class Instance:
+    """
+    Class which represent the instance creator, it will allow to read and write a collection of city
+        Into two different way, according to InstanceSourceType
+    """
     def __init__(self, instance_type: InstanceSourceType):
+        """
+        Constructor for the class
+        :param instance_type: Tell if we are dealing with file or with google sheet source
+        """
         self.loader_type = instance_type
 
-    def __file_loader(self, path, verbose=False) -> List[City]:
+    # To-Do1 -> Add a way for loading also other type of file structure, json(?)
+    def __file_loader(self, path: str, verbose: bool = False) -> List[City]:
+        """
+        Private method for loading an instance from file.
+            v0.1 = It allows only TSPLIB file format
+
+        :param path: The path of the file (could be also relative)
+        :param verbose: Verbose Mode
+        :return: The instance as a list of City
+        """
         _instance = []
         if self.loader_type == InstanceSourceType.File:
             with open(path, "r") as file:
@@ -41,7 +66,15 @@ class Instance:
                                               city_name=str(name), verbose=verbose))
         return _instance
 
-    def __online_loader(self,sheet="Network Optimization - Di Maio", verbose=False):
+    def __online_loader(self, sheet: str = "Network Optimization - Di Maio", verbose: bool = False) -> List[City]:
+        """
+        Private method for loading an instance from google sheet
+        :param sheet: The source sheet, for the purpose of the project the only admitted sheet is the default one.
+        :param verbose: Verbose Mode
+        :return:
+        """
+        # The key file is generated using a google developer account, replace with your own one, if you want this kind
+        #   of features.
         gc = gspread.service_account(filename="./no_dimaio_key.json")
         sh = gc.open(sheet)
         worksheet = sh.worksheet("Loader")
@@ -60,13 +93,28 @@ class Instance:
                                   city_name=str(name), verbose=verbose))
         return _instance
 
-    def __file_writer(self, file_name, tour, verbose=False):
-        with open(f"./{file_name}.csv", "w+") as file:
-            file.write("city_name;coord_x;coord_y\n")
-            for city in tour.tour_cities:
-                file.write(f"{city.name};{city.get_coordinate()[0]};{city.get_coordinate()[1]}\n")
+    def __file_writer(self, file_name: str, tour: Tour, verbose: bool = False):
+        """
+        Private method for writing a tour on a file.
+            v0.1 = It allows only TSPLIB file format
 
-    def __online_writer(self, tour, verbose=False):
+        :param file_name: The name of the output file
+        :param tour: The tour to be written
+        :param verbose: Verbose Mode
+        """
+        with open(f"./{file_name}.tsp", "w+") as file:
+            file.write("city_name coord_x coord_y\n")
+            for city in tour.tour_cities:
+                file.write(f"{city.name} {city.get_coordinate()[0]} {city.get_coordinate()[1]}\n")
+
+    def __online_writer(self, tour: Tour, verbose: bool = False):
+        """
+        Private method for writing a tour on a google sheet.
+            v0.1 = It allows only TSPLIB file format
+
+        :param tour: The tour to be written
+        :param verbose: Verbose Mode
+        """
         gc = gspread.service_account(filename="./no_dimaio_key.json")
 
         sh = gc.open("Network Optimization - Di Maio")
@@ -81,13 +129,25 @@ class Instance:
 
         worksheet.update_cells(cells)
 
-    def loader(self, path=None,gsheet_name="Network Optimization - Di Maio", verbose=False):
+    def loader(self, path: str = None, gsheet_name: str = "Network Optimization - Di Maio", verbose: bool = False) -> List[City]:
+        """
+        Public mask for loading an instance from a source (either File or GSheet)
+        :param path: [LOADER TYPE: FILE] The path of the file (could be also relative)
+        :param gsheet_name: [LOADER TYPE: GSHEET] The name of the google sheet.
+        :param verbose: Verbose Mode
+        """
         if self.loader_type == InstanceSourceType.File:
             return self.__file_loader(path=path)
         else:
             return self.__online_loader(sheet=gsheet_name)
 
-    def writer(self, file_name, tour, verbose=False):
+    def writer(self, file_name: str, tour: Tour, verbose: bool = False):
+        """
+        Public mask for loading an instance from a source (either File or GSheet)
+        :param file_name: [LOADER TYPE: FILE] The path of the file (could be also relative)
+        :param tour: The tour to be written
+        :param verbose: Verbose Mode
+        """
         if self.loader_type == InstanceSourceType.File:
             return self.__file_writer(file_name, tour, verbose=False)
         else:
