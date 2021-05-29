@@ -20,7 +20,7 @@ sys.path.append("./Utils")
 from LocalSearch import LocalSearch
 from ConstructiveHeuristic.FarthestAddition import farthest_addition_algorithm
 from Model.Instance import Instance,InstanceSourceType
-from LocalSearch import Neighbourhood,Exploration
+from LocalSearch import NeighbourhoodType,ExplorationType
 from ConstructiveHeuristic.RepeatedConstructiveAlgorithm import repeated_constructive_algorithm
 verbose_mode = False
 
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     tour = None
 
     if apply_local_search:
-        local_search = LocalSearch(neighbourhood=Neighbourhood.TWO_OPT, exploration=Exploration.FIRST_IMPROVEMENT)
+        local_search = LocalSearch(neighbourhood=NeighbourhoodType.TWO_OPT, exploration=ExplorationType.FIRST_IMPROVEMENT)
     if repeated_version:
         tour = repeated_constructive_algorithm(original_instance=instance,constructive_algorithm=farthest_addition_algorithm,verbose=verbose_mode)
         if apply_local_search:

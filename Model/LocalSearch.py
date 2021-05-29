@@ -4,10 +4,14 @@
 
 from enum import Enum
 from matplotlib import pyplot as plt
+
 from Model.Tour import Tour
 from Model.City import City
 from typing import Callable, List
-from LocalSearching import Neighbourhood as NeighbourhoodAlgorithm
+
+import Algorithm.LocalSearching.Neighbourhood.EdgeExchange.TwoOpt
+import Algorithm.LocalSearching.Exploration.FirstImprovement.TwoOpt
+import Algorithm.LocalSearching.Evaluation.TwoOpt
 from Utils.Plot import plot_local_search_line
 
 
@@ -38,13 +42,14 @@ class LocalSearch:
         #                           self.evaluation for the evaluation
         #                           self.neighborhood = neighbourhood
         # So we can change here the behavior of this attributes without wasting time in creating useless other function
-        if neighbourhood == Neighbourhood.TWO_OPT:
+        self.neighborhood = neighbourhood
+        if neighbourhood == NeighbourhoodType.TWO_OPT:
             # Assign to the callable attributes the 2-opt ones.
 
-            self.neighbor = Algorithm.LocalSearchingNeighbourhood.EdgeExchange.TwoOpt.move2opt
-            if exploration == Exploration.FIRST_IMPROVEMENT:
-                self.exploration = LocalSearching.Exploration.TwoOpt.first_improvement_evaluation
-            self.evaluation = LocalSearching.Evaluation.TwoOpt.delta_evaluation
+            self.neighbor = Algorithm.LocalSearching.Neighbourhood.EdgeExchange.TwoOpt.move2opt
+            if exploration == ExplorationType.FIRST_IMPROVEMENT:
+                self.exploration = Algorithm.LocalSearching.Exploration.FirstImprovement.TwoOpt.first_improvement_evaluation
+            self.evaluation = Algorithm.LocalSearching.Evaluation.TwoOpt.delta_evaluation
 
     def local_search(self, tour: Tour = None, original_instance: List[City] = None,
                      constructive_algorithm: Callable = None, first_city: City = None,
@@ -66,7 +71,7 @@ class LocalSearch:
         fig, scatter = plt.subplots()
         plt.ion()
         plt.show()
-        if self.neighborhood == Neighbourhood.TWO_OPT:
+        if self.neighborhood == NeighbourhoodType.TWO_OPT:
             if constructive_algorithm:
                 if not original_instance:
                     raise ValueError("You cannot perform a constructive algorithm without an instance of cities")

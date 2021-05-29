@@ -15,7 +15,7 @@ sys.path.append("./Model")
 sys.path.append("./Utils")
 from LocalSearch import LocalSearch
 from Model.Instance import Instance,InstanceSourceType
-from LocalSearch import Neighbourhood,Exploration
+from LocalSearch import NeighbourhoodType,ExplorationType
 from Model.Tour import Tour
 
 
@@ -45,7 +45,7 @@ if __name__ == "__main__":
     tour.tour_cities = instance
 
 
-    local_search = LocalSearch(neighbourhood=Neighbourhood.TWO_OPT, exploration=Exploration.FIRST_IMPROVEMENT)
+    local_search = LocalSearch(neighbourhood=NeighbourhoodType.TWO_OPT, exploration=ExplorationType.FIRST_IMPROVEMENT)
     tour = local_search.local_search(tour=tour, verbose=verbose_mode)
     tour.plot()
     print(f"Tour lenght : {tour.length()}")
