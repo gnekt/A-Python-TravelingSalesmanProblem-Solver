@@ -2,10 +2,10 @@
 from QuickPotato.profiling.intrusive import performance_test as pt
 from QuickPotato.statistical.visualizations import FlameGraph
 
-from FarthestAddition import farthest_addition_algorithm
-from FarthestAdditionNaive import farthest_addition_algorithm_naive
-from NearestAddition import  nearest_addition_algorithm
-from NearestNeighbour import nearest_neighbor_algorithm
+from ConstructiveHeuristic.FarthestAddition import farthest_addition_algorithm
+from ConstructiveHeuristic.FarthestAdditionNaive import farthest_addition_algorithm_naive
+from ConstructiveHeuristic.NearestAddition import  nearest_addition_algorithm
+from ConstructiveHeuristic.NearestNeighbour import nearest_neighbor_algorithm
 from Instance import Instance, InstanceSourceType
 
 def testbench(instance):
