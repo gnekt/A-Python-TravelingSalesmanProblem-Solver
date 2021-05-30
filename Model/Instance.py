@@ -1,11 +1,13 @@
 #############################################
 # Created by Christian Di Maio, github : @christiandimaio
 # v 0.1
+import json
+import os
 from enum import Enum
 from Model.City import City, CityDataType
 from typing import List
 import gspread
-
+import logging
 from Tour import Tour
 
 
@@ -13,8 +15,8 @@ class InstanceSourceType(Enum):
     """
     Enumerator for defining the type of the source file
     """
-    File = 0 # It comes from a file
-    GoogleSheet = 1 # It comes from google sheet
+    File = 0  # It comes from a file
+    GoogleSheet = 1  # It comes from google sheet
 
 
 class Instance:
@@ -22,6 +24,7 @@ class Instance:
     Class which represent the instance creator, it will allow to read and write a collection of city
         Into two different way, according to InstanceSourceType
     """
+
     def __init__(self, instance_type: InstanceSourceType):
         """
         Constructor for the class
@@ -41,29 +44,43 @@ class Instance:
         """
         _instance = []
         if self.loader_type == InstanceSourceType.File:
+            try:
+                filename, file_extension = os.path.splitext(path)
+            except FileNotFoundError as ex:
+                logging.exception("File not found", exc_info=True)
             with open(path, "r") as file:
-                _coordinate_types = CityDataType.Euclidian_2D
-                while file:
-                    line = file.readline()
-                    if line == "":
-                        break
-                    if "EDGE_WEIGHT_TYPE" in line:
-                        detect = line.split(sep=":")[1].strip()
-                        if detect != "EUC_2D":
-                            raise TypeError("Sadly for TSPLIB the only supported type is Euclidean 2D :("
-                                            ", if you want use latitude and longitude you need to find another "
-                                            "representation, see the docs")
+                if file_extension == ".tsp":
+                    _coordinate_types = CityDataType.Euclidian_2D
+                    while file:
+                        line = file.readline()
+                        if line == "":
+                            break
+                        if "EDGE_WEIGHT_TYPE" in line:
+                            detect = line.split(sep=":")[1].strip()
+                            if detect != "EUC_2D":
+                                raise TypeError("Sadly for TSPLIB the only supported type is Euclidean 2D :("
+                                                ", if you want use latitude and longitude you need to find another "
+                                                "representation, see the docs")
 
-                        continue
-                    if "NODE_COORD_SECTION" not in line:
-                        continue
-                    # Inizio lettura
-                    for city in file.readlines():
-                        name, x, y = [number.replace("\n", "") for number in city.split(" ")]
-                        _instance.append(City(location_info_type=_coordinate_types,
-                                              coord_x=float(x),
-                                              coord_y=float(y),
-                                              city_name=str(name), verbose=verbose))
+                            continue
+                        if "NODE_COORD_SECTION" not in line:
+                            continue
+                        # Inizio lettura
+                        for city in file.readlines():
+                            name, x, y = [number.replace("\n", "") for number in city.split(" ")]
+                            _instance.append(City(location_info_type=_coordinate_types,
+                                                  coord_x=float(x),
+                                                  coord_y=float(y),
+                                                  city_name=str(name), verbose=verbose))
+                if file_extension == ".json":
+                    instance_raw = json.load(file)
+                    for city in instance_raw:
+                        _instance.append(City(location_info_type=CityDataType.Geographical,
+                                              city_name=str(city),
+                                              coord_y=float(instance_raw[city]['lat']),
+                                              coord_x=float(instance_raw[city]['long']),
+                                              verbose=verbose))
+
         return _instance
 
     def __online_loader(self, sheet: str = "Network Optimization - Di Maio", verbose: bool = False) -> List[City]:
@@ -120,8 +137,8 @@ class Instance:
         sh = gc.open("Network Optimization - Di Maio")
         worksheet = sh.worksheet("Writer")
         _tour = [[city.name,
-                          city.get_coordinate()[0],
-                          city.get_coordinate()[1]] for city in tour.tour_cities]
+                  city.get_coordinate()[0],
+                  city.get_coordinate()[1]] for city in tour.tour_cities]
         cells = []
         for row_num, row in enumerate(_tour):
             for col_num, cell in enumerate(row):
@@ -129,7 +146,8 @@ class Instance:
 
         worksheet.update_cells(cells)
 
-    def loader(self, path: str = None, gsheet_name: str = "Network Optimization - Di Maio", verbose: bool = False) -> List[City]:
+    def loader(self, path: str = None, gsheet_name: str = "Network Optimization - Di Maio", verbose: bool = False) -> \
+    List[City]:
         """
         Public mask for loading an instance from a source (either File or GSheet)
         :param path: [LOADER TYPE: FILE] The path of the file (could be also relative)
