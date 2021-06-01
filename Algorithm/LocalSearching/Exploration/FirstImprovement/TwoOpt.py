@@ -1,3 +1,6 @@
+#############################################
+# Created by professor Marco Pranzo @ NO lAB 2021
+
 from Algorithm.LocalSearching.Evaluation.TwoOpt import delta_evaluation
 from Model.Tour import Tour
 

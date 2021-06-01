@@ -1,6 +1,6 @@
 #############################################
-# Coded by the professor Marco Pranzo @ 2021 NO Lab
-#
+# Created by professor Marco Pranzo @ NO lAB 2021
+
 from Model.Tour import Tour
 
 

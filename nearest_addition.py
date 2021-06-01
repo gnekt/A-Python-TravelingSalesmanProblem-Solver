@@ -20,7 +20,7 @@ sys.path.append("./Utils")
 from LocalSearch import LocalSearch
 from ConstructiveHeuristic.NearestAddition import nearest_addition_algorithm
 from Model.Instance import Instance,InstanceSourceType
-from LocalSearch import NeighbourhoodType,ExplorationType
+from LocalSearch import NeighborhoodType,ExplorationType
 from ConstructiveHeuristic.RepeatedConstructiveAlgorithm import repeated_constructive_algorithm
 verbose_mode = False
 
@@ -52,7 +52,7 @@ if __name__ == "__main__":
     tour = None
 
     if apply_local_search:
-        local_search = LocalSearch(neighbourhood=NeighbourhoodType.TWO_OPT, exploration=ExplorationType.FIRST_IMPROVEMENT)
+        local_search = LocalSearch(neighbourhood=NeighborhoodType.TWO_OPT, exploration=ExplorationType.FIRST_IMPROVEMENT)
     if repeated_version:
         tour = repeated_constructive_algorithm(original_instance=instance,constructive_algorithm=nearest_addition_algorithm,verbose=verbose_mode)
         if apply_local_search:
@@ -64,4 +64,5 @@ if __name__ == "__main__":
         else:
             tour = nearest_addition_algorithm(original_instance=instance,verbose=verbose_mode)
     tour.plot()
+    interface.writer("NearestAddition", tour=tour)
     print(f"Tour lenght : {tour.length()}")

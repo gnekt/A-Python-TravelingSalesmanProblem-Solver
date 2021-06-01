@@ -1,5 +1,6 @@
 #############################################
-# Created by Christian Di Maio, github : @christiandimaio
+# Created by Christian Di Maio (github : @christiandimaio)
+# starting from the code of Professor Marco Pranzo
 # v 0.1
 import webbrowser
 from typing import List

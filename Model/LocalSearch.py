@@ -15,7 +15,7 @@ import Algorithm.LocalSearching.Evaluation.TwoOpt
 from Utils.Plot import plot_local_search_line
 
 
-class NeighbourhoodType(Enum):
+class NeighborhoodType(Enum):
     TWO_OPT = 0
 
 
@@ -30,7 +30,7 @@ class LocalSearch:
         of the algorithm:
             Neighbourhood, Exploration and Evaluation
     """
-    def __init__(self, neighbourhood: NeighbourhoodType, exploration: ExplorationType):
+    def __init__(self, neighbourhood: NeighborhoodType, exploration: ExplorationType):
         """
         Constructor for the class
         :param neighbourhood: The typology of the neighbourhood, only 2-opt is yet implemented
@@ -43,7 +43,7 @@ class LocalSearch:
         #                           self.neighborhood = neighbourhood
         # So we can change here the behavior of this attributes without wasting time in creating useless other function
         self.neighborhood = neighbourhood
-        if neighbourhood == NeighbourhoodType.TWO_OPT:
+        if neighbourhood == NeighborhoodType.TWO_OPT:
             # Assign to the callable attributes the 2-opt ones.
 
             self.neighbor = Algorithm.LocalSearching.Neighbourhood.EdgeExchange.TwoOpt.move2opt
@@ -71,7 +71,7 @@ class LocalSearch:
         fig, scatter = plt.subplots()
         plt.ion()
         plt.show()
-        if self.neighborhood == NeighbourhoodType.TWO_OPT:
+        if self.neighborhood == NeighborhoodType.TWO_OPT:
             if constructive_algorithm:
                 if not original_instance:
                     raise ValueError("You cannot perform a constructive algorithm without an instance of cities")

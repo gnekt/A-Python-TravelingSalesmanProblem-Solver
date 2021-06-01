@@ -36,7 +36,6 @@ class Instance:
     def __file_loader(self, path: str, verbose: bool = False) -> List[City]:
         """
         Private method for loading an instance from file.
-            v0.1 = It allows only TSPLIB file format
 
         :param path: The path of the file (could be also relative)
         :param verbose: Verbose Mode
@@ -119,7 +118,7 @@ class Instance:
         :param tour: The tour to be written
         :param verbose: Verbose Mode
         """
-        with open(f"./{file_name}.tsp", "w+") as file:
+        with open(f"./{file_name}.csv", "w+") as file:
             file.write("city_name coord_x coord_y\n")
             for city in tour.tour_cities:
                 file.write(f"{city.name} {city.get_coordinate()[0]} {city.get_coordinate()[1]}\n")
