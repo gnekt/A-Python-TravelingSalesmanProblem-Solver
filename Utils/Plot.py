@@ -5,7 +5,7 @@ from typing import List
 import matplotlib
 from Model.Tour import Tour
 import matplotlib.pyplot as plt
-
+from Model.City import City
 
 def plot_2d_tour(tour: Tour, velocity: float, graph_step_by_step: bool, instances: List[City] = None,
                  figure=None, scatter: matplotlib.axes.Axes = None):

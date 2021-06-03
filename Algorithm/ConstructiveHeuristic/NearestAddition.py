@@ -37,7 +37,14 @@ def nearest_city_wrt_tour(my_tour: Tour, current_city: City, verbose: bool = Fal
         if verbose:
             print(f"\t \t \t Nearest City To The Tour: Length {best_distance}")
     else:
-        for prev_city, next_city in zip(my_tour, my_tour[1:]):
+        # use a deep copy of the tour cities and add again the initial city for completing the cycle,
+        # done for considering also the last arc!
+        # the main insertion takes care only on prev_city so we don't have any such problem on doing this, so even if
+        # in this local deep copy (remember copy() is deep only on the first layer of a collection) we have again the
+        # initial city at the end, it will be (in case the criterion pick the last arc) the next_city (USELESS!)
+        _city_list = my_tour.copy()
+        _city_list.append(_city_list[0])
+        for prev_city, next_city in zip(_city_list, _city_list[1:]):
             logging.info(f"Farthest City To The Tour: Try this shortcut {prev_city}-{current_city}-{next_city}")
             if verbose:
                 print(f"\t \t \t Nearest City To The Tour: Try this shortcut {prev_city}-{current_city}-{next_city}")

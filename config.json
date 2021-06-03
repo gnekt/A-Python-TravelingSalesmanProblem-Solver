@@ -1,9 +1,0 @@
-{
-  "configuration": {
-    "google": {
-      "sheet": {
-        "api_key": "YOUR KEY HERE"
-      }
-    }
-  }
-}

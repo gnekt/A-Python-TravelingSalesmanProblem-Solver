@@ -4,18 +4,22 @@
 
 from enum import Enum
 from matplotlib import pyplot as plt
+
 from Model.Tour import Tour
 from Model.City import City
 from typing import Callable, List
-import TwoOpt
+
+import Algorithm.LocalSearching.Neighbourhood.EdgeExchange.TwoOpt
+import Algorithm.LocalSearching.Exploration.FirstImprovement.TwoOpt
+import Algorithm.LocalSearching.Evaluation.TwoOpt
 from Utils.Plot import plot_local_search_line
 
 
-class Neighbourhood(Enum):
+class NeighborhoodType(Enum):
     TWO_OPT = 0
 
 
-class Exploration(Enum):
+class ExplorationType(Enum):
     FIRST_IMPROVEMENT = 0
     BEST_IMPROVEMENT = 0
 
@@ -26,7 +30,7 @@ class LocalSearch:
         of the algorithm:
             Neighbourhood, Exploration and Evaluation
     """
-    def __init__(self, neighbourhood: Neighbourhood, exploration: Exploration):
+    def __init__(self, neighbourhood: NeighborhoodType, exploration: ExplorationType):
         """
         Constructor for the class
         :param neighbourhood: The typology of the neighbourhood, only 2-opt is yet implemented
@@ -38,12 +42,14 @@ class LocalSearch:
         #                           self.evaluation for the evaluation
         #                           self.neighborhood = neighbourhood
         # So we can change here the behavior of this attributes without wasting time in creating useless other function
-        if neighbourhood == Neighbourhood.TWO_OPT:
+        self.neighborhood = neighbourhood
+        if neighbourhood == NeighborhoodType.TWO_OPT:
             # Assign to the callable attributes the 2-opt ones.
-            self.neighbor = TwoOpt.move2opt
-            if exploration == Exploration.FIRST_IMPROVEMENT:
-                self.exploration = TwoOpt.first_improvement_evaluation
-            self.evaluation = TwoOpt.delta_evaluation
+
+            self.neighbor = Algorithm.LocalSearching.Neighbourhood.EdgeExchange.TwoOpt.move2opt
+            if exploration == ExplorationType.FIRST_IMPROVEMENT:
+                self.exploration = Algorithm.LocalSearching.Exploration.FirstImprovement.TwoOpt.first_improvement_evaluation
+            self.evaluation = Algorithm.LocalSearching.Evaluation.TwoOpt.delta_evaluation
 
     def local_search(self, tour: Tour = None, original_instance: List[City] = None,
                      constructive_algorithm: Callable = None, first_city: City = None,
@@ -65,7 +71,7 @@ class LocalSearch:
         fig, scatter = plt.subplots()
         plt.ion()
         plt.show()
-        if self.neighborhood == Neighbourhood.TWO_OPT:
+        if self.neighborhood == NeighborhoodType.TWO_OPT:
             if constructive_algorithm:
                 if not original_instance:
                     raise ValueError("You cannot perform a constructive algorithm without an instance of cities")
