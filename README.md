@@ -31,7 +31,7 @@ a local search.
 the loading/writing could be 'online' with the support of google sheet.
 - The program is capable of doing multi-core processing for evaluating more than one solution at the time.
 - When the cities are expressed as geographical points, the program can draw a map with the tour using Folium library.
-
+- The implementation of Local Search is modular with respect of the first solution algorithm.
 
 ---
 
@@ -116,6 +116,7 @@ python3 test_bench.py
 ```
 It will generate an html file which represent the cpu time consuming by each part of the algorithm
 
+<img src="https://imgur.com/rz2hItX" width="90%"></img> 
 ---
 
 Possible problem:
