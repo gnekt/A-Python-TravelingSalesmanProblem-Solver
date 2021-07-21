@@ -98,6 +98,9 @@ All these parameters are compulsory and they are case sensitive, so pay attentio
 ```
 python3 nearest_neighbor.py False True file "./data sets/json/AmericanCapitals.json" True
 ```
+
+<img src="https://user-images.githubusercontent.com/39567665/126537290-ae761ff0-1fef-4fda-a1d0-aec91f16707f.png" width="100%"></img> 
+
 ---
 
 ### Some solution example can be found into the directory Result
@@ -115,6 +118,8 @@ all the approaches, the test could be done by running this command:
 python3 test_bench.py
 ```
 It will generate an html file which represent the cpu time consuming by each part of the algorithm
+
+<img src="https://user-images.githubusercontent.com/39567665/126536758-17fb0d9e-0be0-4387-9351-c1f487b0ac88.png" width="100%"></img> 
 
 ---
 
