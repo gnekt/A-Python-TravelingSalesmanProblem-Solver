@@ -68,9 +68,10 @@ class LocalSearch:
         """
         _length_history = {}
         _iteration = 1
-        fig, scatter = plt.subplots()
-        plt.ion()
-        plt.show()
+        if verbose:
+            fig, scatter = plt.subplots()
+            plt.ion()
+            plt.show()
         if self.neighborhood == NeighborhoodType.TWO_OPT:
             if constructive_algorithm:
                 if not original_instance:
@@ -83,7 +84,8 @@ class LocalSearch:
             _length_history[_iteration] = tour.length()
             while True:
                 try:
-                    plot_local_search_line(scatter, list(_length_history.keys()), list(_length_history.values()),
+                    if verbose:
+                        plot_local_search_line(scatter, list(_length_history.keys()), list(_length_history.values()),
                                            velocity=0.01, graph_step_by_step=False)
                     pos1, pos3 = self.exploration(tour, verbose)
                     _length_history[_iteration] = tour.length()

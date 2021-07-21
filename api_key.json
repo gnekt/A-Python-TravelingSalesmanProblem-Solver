@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "network-optimization-2021",
+  "private_key_id": "be53f463ba271cd4afb3b34a3f8bc157e680576c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCatF+7D+uXJoIm\nW2LxC0UFp8zRMIiYbBO6QoKkxINoTVXzU/hWD8O7Lp5huWRFkeDsPSjeM/5U4exE\nPMZ0UC+PxrpSz8J2rIhoFNQU5hUjDqvRdJrgUOKSRkSQiM00rBcPuBCrPuwD638J\naKVOAjuTdHKMJ6rqPamBiht3Yjw8WEGdW87t6iKdMjLFL2fBIdSDxgZHYf8B8aJ3\nhle3S10Ms2+bb7YxcpYb68RaUJXtV+EX3UysRVTCm7pCuKR9GBY/uVzFJj32QjW8\nT/x5Zve8srk7Dh8NLmq8lcotYBEeLZia+AHvxP7QCh6JM5mBfWzBJlGBs5N6aRGr\nkusclwrPAgMBAAECggEAC7EgHwoX+wdtBKsZcjAw2jmRUCoD2MkqQIRwTTWQ3Nwj\nZ81r0k1EtKvUSnxxaJSa1B/XK9vwF8gvTATv1rCMt6gEQufywXdOo9cXJDEzXb/p\nGl5eqh9S0E1BN08vexCaeZSmpdqOiclNg4+GFrwydnVxhsgksalRWznt03r4JHNF\nA9M75FUE11mbdtr+X0xpJNlWITrXiBVpJCsV2/YBFQzkOVSL7w5KRZqYJ/Mv8YLr\nhik4WBEi6Qdy9WpdpWcX0iEOfiCLY6q6WkUFpUwhXRGpM5X8rvVKNHnMHgl1yMmf\nFcFvwH5eq/efqfNSdzn3YZy2XmxYMfd7a7LMTWO7KQKBgQDLPBjomnuq7QCCPovl\nSKyhr1HQre4MUA2PKzrCxWGiHT8DOkg6fNQdadfKwjO7e3MjvDxBbDE76ctEou9u\nEDuSJg/HnBnbcoPxxa2Aa5t6kI/QedKB5Z6n32qgRPenixbgkIGj/jNlENhqbDfH\nWY8E4E4kgHsWtj0tpMR6dEsVlQKBgQDC3r3f/bB2Hl16IOW1G4mx6Xca2TwWhFvR\n4rB4nmVPEG6EWavwvitZo02Dg/06IYdx5HRpt5pgyPrXreEj1I6CsXhYeL78Arqy\nue+n6y1LzVffir8Jfavr6iRCQqxWOzOraPgFQRti8UMxREQBKWhnlwg+n2TnvWrS\n9f9IfOD90wKBgBxZl8fqtNGVGfsRKoajaqFrSWhousow6JNOHnZI/mOU3NNgb+7o\nttYbi6SXDoxanicf/O/LXdrTtC0w5WFfFlA+yvi3R8wa31j8kEVXvWqNe+JC/CBu\nnYEhY0hUFo/ikSBmSA9OSHEStn2x9t3yGkc92uiwm3sBlOsnDtleG5M5AoGAByOj\n7y3bJiisognMgJsWq1bzTx+ATQ7iUkksz+51pbTjZ6PlYbeF3Q3XjCbswxFxZeHJ\nxgm89SjHz9kF84sZAX7A+vTJgnATKPMY7Zz3FtzaCE2L/CwHfWghle/dYndeyDvb\nQk4FU9Wk8Ywfta8vrQPigHDUgIz2+e2bQauZjpMCgYEAyH2qzeEwrtyWMO9AeFvn\nkuYaka33BAf/4hETjv22CV+Pxiu7lx/J+4UPl2UmTYMAsB/SQoy196Xj7QYNZ8Rv\ntHFqPXdvMefZtM8v5p5ZIUPPL7LJLX+9pAJYKjBarMLrlDjwszm1zSB9W3FPV2Dz\nLXzWQXPZnnFW+/bgeNWelgs=\n-----END PRIVATE KEY-----\n",
+  "client_email": "dimaionetworkoptimization@network-optimization-2021.iam.gserviceaccount.com",
+  "client_id": "113348807829421215475",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dimaionetworkoptimization%40network-optimization-2021.iam.gserviceaccount.com"
+}

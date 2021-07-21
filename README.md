@@ -48,6 +48,19 @@ Requirements:
 You can choose a json/tsp file from local hard disk or using a google sheet file
 assuming you can open a google developer key.
 
+What you need for google sheet loading/writing is an ```api_key.json``` file into the root of the project.\
+You can follow a tutorial on the web on how to get an api_key for gsheet.
+
+The structure of the gsheet file follow this guideline: https://docs.google.com/spreadsheets/d/1Xy1rrvGlqaTPpoVt7X9o5Ts_Zi_UtLi447nbcO3fbGQ/edit?usp=sharing
+
+The structure for the gsheet loader/writer follow this header:
+```csv
+city_name coord_1 coord_2
+```
+Plus a last column on the loader that could be:
+- Euclidian_2D, if coord_1 is coord_x and coord_2 is coord_y as TSPLib format
+- Geographical, if coord_1 is Longitude and coord_2 is Latitude
+
 ##### How to run a constructive algorithm?
 
 Pick up the algorithm that you want to use:
@@ -85,6 +98,12 @@ All these parameters are compulsory and they are case sensitive, so pay attentio
 ```
 python3 nearest_neighbor.py False True file "./data sets/json/AmericanCapitals.json" True
 ```
+---
+
+### Some solution example can be found into the directory Result
+
+Which try to solve The American Capitals TSP and The Djibouti TSP.
+
 ---
 
 ### Test Bench

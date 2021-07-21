@@ -13,13 +13,13 @@ from LocalSearch import NeighborhoodType, ExplorationType, LocalSearch
 
 def local_search(instance):
     local_search = LocalSearch(neighbourhood=NeighborhoodType.TWO_OPT, exploration=ExplorationType.FIRST_IMPROVEMENT)
-    local_search.local_search(original_instance=instance,constructive_algorithm=farthest_addition_algorithm_naive)
-    local_search.local_search(original_instance=instance, constructive_algorithm=farthest_addition_algorithm)
-    local_search.local_search(original_instance=instance, constructive_algorithm=nearest_addition_algorithm)
-    local_search.local_search(original_instance=instance, constructive_algorithm=nearest_neighbor_algorithm)
+    # local_search.local_search(original_instance=instance,constructive_algorithm=farthest_addition_algorithm_naive,verbose=False)
+    # local_search.local_search(original_instance=instance, constructive_algorithm=farthest_addition_algorithm,verbose=False)
+    # local_search.local_search(original_instance=instance, constructive_algorithm=nearest_addition_algorithm,verbose=False)
+    local_search.local_search(original_instance=instance, constructive_algorithm=nearest_neighbor_algorithm,verbose=False)
 
 def testbench(instance):
-    #local_search(instance)
+    local_search(instance)
     farthest_addition_algorithm_naive(original_instance=instance)
     farthest_addition_algorithm(original_instance=instance)
     nearest_addition_algorithm(original_instance=instance)

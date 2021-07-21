@@ -91,7 +91,7 @@ class Instance:
         """
         # The key file is generated using a google developer account, replace with your own one, if you want this kind
         #   of features.
-        gc = gspread.service_account(filename="./no_dimaio_key.json")
+        gc = gspread.service_account(filename="./api_key.json")
         sh = gc.open(sheet)
         worksheet = sh.worksheet("Loader")
         coordinates_type = CityDataType.Euclidian_2D \
@@ -131,7 +131,7 @@ class Instance:
         :param tour: The tour to be written
         :param verbose: Verbose Mode
         """
-        gc = gspread.service_account(filename="./no_dimaio_key.json")
+        gc = gspread.service_account(filename="./api_key.json")
 
         sh = gc.open("Network Optimization - Di Maio")
         worksheet = sh.worksheet("Writer")

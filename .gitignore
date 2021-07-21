@@ -113,7 +113,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-no_dimaio_key.json
-*.html
-*.png
-*.html
+api_key.json
