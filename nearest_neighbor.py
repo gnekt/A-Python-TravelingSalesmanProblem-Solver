@@ -1,7 +1,7 @@
 #############################################
 # Created by Christian Di Maio, github : @christiandimaio
 # v 0.1
-# example: python3 farthest_addition.py <repeated_version> <apply_local_search> <instance_type> <instance_source_path> <verbose>
+# example: python3 nearest_neighbor.py <repeated_version> <apply_local_search> <instance_type> <instance_source_path> <verbose>
 # <repeated_version> : bool -> (True) it will iterate changing the starting city and pick the best
 #                               (False) starting from the last city in the instance
 # <apply_local_search> : bool -> (True) after computing the constructive algorithm it will apply the local search
@@ -18,11 +18,10 @@ sys.path.append("./Algorithm")
 sys.path.append("./Model")
 sys.path.append("./Utils")
 from LocalSearch import LocalSearch
-from ConstructiveHeuristic.NearestNeighbour import nearest_neighbor_algorithm
+from ConstructiveHeuristic.NearestNeighbor import nearest_neighbor_algorithm
 from Model.Instance import Instance,InstanceSourceType
 from LocalSearch import NeighborhoodType,ExplorationType
 from ConstructiveHeuristic.RepeatedConstructiveAlgorithm import repeated_constructive_algorithm
-verbose_mode = False
 
 if __name__ == "__main__":
     print("Nearest Neighbor script launched..")
